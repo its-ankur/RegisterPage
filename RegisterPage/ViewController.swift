@@ -37,6 +37,14 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     var countryPicker: UIPickerView!
     let countries = ["USA", "Canada", "UK", "India", "Australia"]
     
+    // Create a date formatter
+        let dateFormatter: DateFormatter = {
+            let formatter = DateFormatter()
+            formatter.dateStyle = .medium // Change to your preferred style
+            formatter.dateFormat = "dd/MM/yyyy" // Set your desired format
+            return formatter
+        }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -50,7 +58,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         addSeparatorBelow(view: Contact)
         addSeparatorBelow(view: DateOfBirth)
         addSeparatorBelow(view: Country)
-        addSeparatorBelow(view: GenderView)
         addSeparatorBelow(view: Password)
         addSeparatorBelow(view: ConfirmPass)
         
@@ -108,6 +115,9 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         // **Add targets for real-time validation on Contact and DateOfBirth fields**
             Contact.addTarget(self, action: #selector(contactEditingChanged(_:)), for: .editingChanged)
             DateOfBirth.addTarget(self, action: #selector(dateOfBirthEditingChanged(_:)), for: .editingChanged)
+        
+        Contact.keyboardType = .numberPad
+        
     }
     
     // MARK: - Setup Functions
@@ -271,6 +281,13 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             // Removed real-time validation from delegate
             // validateConfirmPassword()
         }
+        // Allow the text to change
+                let newText = (textField.text! as NSString).replacingCharacters(in: range, with: string)
+
+                // Check if the new text is a valid date
+                if let date = dateFormatter.date(from: newText) {
+                    DatePicker.setDate(date, animated: true)
+                }
         return true
     }
     
@@ -624,6 +641,10 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         validateDateOfBirth()
     }
 
+    // Update text field when date picker changes
+        @objc func datePickerValueChanged(_ sender: UIDatePicker) {
+            DateOfBirth.text = dateFormatter.string(from: sender.date)
+        }
     
 }
 

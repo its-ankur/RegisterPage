@@ -20,22 +20,22 @@
                                 <rect key="frame" x="0.0" y="64" width="320" height="986"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="seJ-B2-RXh">
-                                        <rect key="frame" x="0.0" y="0.0" width="304" height="1000"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="1000"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create your new account" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c3c-lc-rEE">
-                                                <rect key="frame" x="20" y="20" width="264" height="19.5"/>
+                                                <rect key="frame" x="20" y="20" width="280" height="19.5"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="nBM-JX-w1f">
-                                                <rect key="frame" x="10" y="59.5" width="284" height="900"/>
+                                                <rect key="frame" x="10" y="59.5" width="300" height="900"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KOh-mg-oRe">
-                                                        <rect key="frame" x="0.0" y="0.0" width="284" height="72.5"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="300" height="72.5"/>
                                                         <subviews>
                                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="First Name *" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6IY-vO-UW0">
-                                                                <rect key="frame" x="10" y="10" width="264" height="52.5"/>
+                                                                <rect key="frame" x="10" y="10" width="280" height="52.5"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                 <textInputTraits key="textInputTraits" textContentType="name"/>
                                                             </textField>
@@ -49,10 +49,10 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c82-Kj-7p8">
-                                                        <rect key="frame" x="0.0" y="82.5" width="284" height="73"/>
+                                                        <rect key="frame" x="0.0" y="82.5" width="300" height="73"/>
                                                         <subviews>
                                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Last Name" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="H8K-1Y-jRl">
-                                                                <rect key="frame" x="10" y="10" width="264" height="53"/>
+                                                                <rect key="frame" x="10" y="10" width="280" height="53"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                 <textInputTraits key="textInputTraits" textContentType="family-name"/>
                                                             </textField>
@@ -66,10 +66,10 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w01-TZ-n1w">
-                                                        <rect key="frame" x="0.0" y="165.5" width="284" height="72.5"/>
+                                                        <rect key="frame" x="0.0" y="165.5" width="300" height="72.5"/>
                                                         <subviews>
                                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email Address *" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3rX-aN-eMz">
-                                                                <rect key="frame" x="10" y="10" width="264" height="52.5"/>
+                                                                <rect key="frame" x="10" y="10" width="280" height="52.5"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                 <textInputTraits key="textInputTraits" textContentType="email"/>
                                                             </textField>
@@ -83,10 +83,10 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kno-x2-GP9">
-                                                        <rect key="frame" x="0.0" y="248" width="284" height="73"/>
+                                                        <rect key="frame" x="0.0" y="248" width="300" height="73"/>
                                                         <subviews>
                                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Contact Number" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rJe-n7-EBI">
-                                                                <rect key="frame" x="10" y="10" width="264" height="53"/>
+                                                                <rect key="frame" x="10" y="10" width="280" height="53"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                 <textInputTraits key="textInputTraits"/>
                                                             </textField>
@@ -100,10 +100,10 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S8w-OO-e7l">
-                                                        <rect key="frame" x="0.0" y="331" width="284" height="72.5"/>
+                                                        <rect key="frame" x="0.0" y="331" width="300" height="72.5"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bbf-gX-RhZ">
-                                                                <rect key="frame" x="10" y="10" width="264" height="52.5"/>
+                                                                <rect key="frame" x="10" y="10" width="280" height="52.5"/>
                                                                 <subviews>
                                                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Date Of Birth" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0Vx-Vf-RSj">
                                                                         <rect key="frame" x="0.0" y="0.0" width="132" height="52.5"/>
@@ -111,7 +111,7 @@
                                                                         <textInputTraits key="textInputTraits" textContentType="bday"/>
                                                                     </textField>
                                                                     <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" translatesAutoresizingMaskIntoConstraints="NO" id="YRi-zN-iv4">
-                                                                        <rect key="frame" x="132" y="0.0" width="132" height="52.5"/>
+                                                                        <rect key="frame" x="132" y="0.0" width="148" height="52.5"/>
                                                                     </datePicker>
                                                                 </subviews>
                                                             </stackView>
@@ -125,10 +125,10 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MDP-ER-UjT">
-                                                        <rect key="frame" x="0.0" y="413.5" width="284" height="73"/>
+                                                        <rect key="frame" x="0.0" y="413.5" width="300" height="73"/>
                                                         <subviews>
                                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Select Country" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VlE-cO-Mga">
-                                                                <rect key="frame" x="10" y="10" width="264" height="53"/>
+                                                                <rect key="frame" x="10" y="10" width="280" height="53"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                 <textInputTraits key="textInputTraits"/>
                                                             </textField>
@@ -142,18 +142,18 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LF7-xM-tfV">
-                                                        <rect key="frame" x="0.0" y="496.5" width="284" height="72.5"/>
+                                                        <rect key="frame" x="0.0" y="496.5" width="300" height="72.5"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="Nf7-nN-YHv">
-                                                                <rect key="frame" x="10" y="5" width="264" height="62.5"/>
+                                                                <rect key="frame" x="10" y="5" width="280" height="62.5"/>
                                                                 <subviews>
-                                                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Select Gender *" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Aqh-Y3-DLj">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="264" height="30"/>
+                                                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Select Gender *" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Aqh-Y3-DLj">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="280" height="30"/>
                                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                         <textInputTraits key="textInputTraits"/>
                                                                     </textField>
                                                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="fPm-tp-6OA">
-                                                                        <rect key="frame" x="0.0" y="32" width="264" height="31.5"/>
+                                                                        <rect key="frame" x="0.0" y="32" width="280" height="31.5"/>
                                                                         <segments>
                                                                             <segment title="Male"/>
                                                                             <segment title="Female"/>
@@ -179,10 +179,10 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bLC-RU-T2Y">
-                                                        <rect key="frame" x="0.0" y="579" width="284" height="73"/>
+                                                        <rect key="frame" x="0.0" y="579" width="300" height="73"/>
                                                         <subviews>
                                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password *" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eT6-z8-B8c">
-                                                                <rect key="frame" x="10" y="10" width="264" height="53"/>
+                                                                <rect key="frame" x="10" y="10" width="280" height="53"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                 <textInputTraits key="textInputTraits"/>
                                                             </textField>
@@ -196,10 +196,10 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6fc-Gf-fP0">
-                                                        <rect key="frame" x="0.0" y="662" width="284" height="72.5"/>
+                                                        <rect key="frame" x="0.0" y="662" width="300" height="72.5"/>
                                                         <subviews>
                                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Confirm Password *" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VEb-Sy-iBN">
-                                                                <rect key="frame" x="10" y="10" width="264" height="52.5"/>
+                                                                <rect key="frame" x="10" y="10" width="280" height="52.5"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                 <textInputTraits key="textInputTraits"/>
                                                             </textField>
@@ -213,17 +213,17 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t93-U2-bNE">
-                                                        <rect key="frame" x="0.0" y="744.5" width="284" height="73"/>
+                                                        <rect key="frame" x="0.0" y="744.5" width="300" height="73"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="tbr-kc-dhv">
-                                                                <rect key="frame" x="10" y="10" width="264" height="53"/>
+                                                                <rect key="frame" x="10" y="10" width="280" height="53"/>
                                                                 <subviews>
-                                                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="FQ3-pt-r4s">
-                                                                        <rect key="frame" x="0.0" y="11" width="49" height="31"/>
+                                                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="FQ3-pt-r4s">
+                                                                        <rect key="frame" x="0.0" y="11" width="51" height="31"/>
                                                                         <color key="onTintColor" systemColor="systemOrangeColor"/>
                                                                     </switch>
-                                                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="I agree to the terms and conditions *" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WAf-WZ-1b0">
-                                                                        <rect key="frame" x="57" y="18.5" width="207" height="16"/>
+                                                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="I agree to the terms and conditions *" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WAf-WZ-1b0">
+                                                                        <rect key="frame" x="59" y="18.5" width="221" height="16"/>
                                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                                         <textInputTraits key="textInputTraits"/>
                                                                     </textField>
@@ -239,10 +239,10 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vzq-s2-0Le">
-                                                        <rect key="frame" x="0.0" y="827.5" width="284" height="72.5"/>
+                                                        <rect key="frame" x="0.0" y="827.5" width="300" height="72.5"/>
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tim-Ko-dak">
-                                                                <rect key="frame" x="10" y="10" width="264" height="52.5"/>
+                                                                <rect key="frame" x="10" y="10" width="280" height="52.5"/>
                                                                 <state key="normal" title="Button"/>
                                                                 <buttonConfiguration key="configuration" style="filled" title="Register">
                                                                     <color key="baseBackgroundColor" systemColor="systemOrangeColor"/>
@@ -293,7 +293,7 @@
                             <constraint firstItem="A2o-ZS-8yI" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="RUs-pT-Vs2"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="A2o-ZS-8yI" secondAttribute="trailing" id="Xca-JG-yKD"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="A2o-ZS-8yI" secondAttribute="bottom" id="iBF-x7-shW"/>
-                            <constraint firstItem="seJ-B2-RXh" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.95" id="sNT-VC-EZv"/>
+                            <constraint firstItem="seJ-B2-RXh" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="sNT-VC-EZv"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Register Page" id="pNp-qI-EhA"/>
@@ -440,6 +440,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="W8R-We-W9i">
                         <rect key="frame" x="0.0" y="20" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" systemColor="systemOrangeColor"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
