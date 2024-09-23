@@ -624,6 +624,8 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="5ZE-xK-iQX">
                         <rect key="frame" x="0.0" y="20" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" systemColor="labelColor"/>
+                        <color key="barTintColor" systemColor="systemOrangeColor"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -638,6 +640,9 @@
     <resources>
         <image name="Image" width="1687.5" height="1687.5"/>
         <image name="Image 1" width="480" height="336"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
