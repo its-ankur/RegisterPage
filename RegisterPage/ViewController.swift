@@ -500,8 +500,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         validatePassword()
         validateConfirmPassword()
         validateSwitch()
-        validateDateOfBirth()
-        validateContact()
         validateCountry()
         
         // Check if there are no validation errors
