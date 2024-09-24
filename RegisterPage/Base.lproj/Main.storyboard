@@ -13,14 +13,14 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="RegisterPage" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="1050"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="1200"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A2o-ZS-8yI">
-                                <rect key="frame" x="0.0" y="20" width="320" height="1030"/>
+                                <rect key="frame" x="0.0" y="20" width="320" height="1180"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="seJ-B2-RXh">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="1000"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="1100"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create your new account" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c3c-lc-rEE">
                                                 <rect key="frame" x="20" y="20" width="280" height="19.5"/>
@@ -286,13 +286,13 @@
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="1000" id="AuJ-aE-OLx"/>
                                             <constraint firstItem="nBM-JX-w1f" firstAttribute="leading" secondItem="seJ-B2-RXh" secondAttribute="leading" constant="10" id="Ici-iq-Oi2"/>
                                             <constraint firstAttribute="trailing" secondItem="c3c-lc-rEE" secondAttribute="trailing" constant="20" id="MvO-eS-aCP"/>
                                             <constraint firstItem="c3c-lc-rEE" firstAttribute="top" secondItem="seJ-B2-RXh" secondAttribute="top" constant="20" id="Q7U-13-XtI"/>
                                             <constraint firstItem="c3c-lc-rEE" firstAttribute="leading" secondItem="seJ-B2-RXh" secondAttribute="leading" constant="20" id="QOj-bT-Wzl"/>
                                             <constraint firstAttribute="trailing" secondItem="nBM-JX-w1f" secondAttribute="trailing" constant="10" id="Z8F-Tx-maZ"/>
                                             <constraint firstItem="nBM-JX-w1f" firstAttribute="top" secondItem="c3c-lc-rEE" secondAttribute="bottom" constant="20" id="tXj-oh-pZA"/>
+                                            <constraint firstAttribute="height" constant="1100" id="wDd-b6-6O1"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -316,7 +316,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Register Page" id="pNp-qI-EhA"/>
                     <nil key="simulatedTopBarMetrics"/>
-                    <size key="freeformSize" width="320" height="1050"/>
+                    <size key="freeformSize" width="320" height="1200"/>
                     <connections>
                         <outlet property="CalenderIcon" destination="0sR-WR-qPn" id="ss8-1y-bB1"/>
                         <outlet property="ConfirmPass" destination="VEb-Sy-iBN" id="hgA-vi-5JI"/>
