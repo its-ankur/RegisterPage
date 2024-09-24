@@ -36,6 +36,12 @@ class LoginPageViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.backgroundColor=nil
+    }
+
+    
     private func navigateToUserDetailsPage() {
         if let detailsViewController = self.storyboard?.instantiateViewController(withIdentifier: "ShowDetailsViewController") as? ShowDetailsViewController {
             navigationController?.pushViewController(detailsViewController, animated: true)
@@ -235,6 +241,7 @@ class LoginPageViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func registerButtonTapped(_ sender: UIButton) {
         // Navigate to Register Page
+        print("Register Here tapped")
         if let registerVC = storyboard?.instantiateViewController(withIdentifier: "ViewController") as? ViewController {
             self.navigationController?.pushViewController(registerVC, animated: true)
         }

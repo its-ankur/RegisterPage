@@ -25,7 +25,7 @@
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Image 1" translatesAutoresizingMaskIntoConstraints="NO" id="UZZ-bE-BND">
                                                 <rect key="frame" x="0.0" y="0.0" width="320" height="176.5"/>
                                             </imageView>
-                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Welcome back user" textAlignment="center" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="g2l-jh-cJn">
+                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Welcome back user" textAlignment="center" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="g2l-jh-cJn">
                                                 <rect key="frame" x="10" y="155.5" width="300" height="16"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                 <textInputTraits key="textInputTraits"/>
@@ -138,9 +138,9 @@
                                     <stackView opaque="NO" contentMode="center" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="6S7-DO-4kS">
                                         <rect key="frame" x="20" y="0.0" width="260" height="31"/>
                                         <subviews>
-                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="right" contentVerticalAlignment="center" text="Don't have account ?" textAlignment="right" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xxe-2O-08e">
-                                                <rect key="frame" x="0.0" y="6.5" width="130" height="17.5"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" enabled="NO" contentHorizontalAlignment="right" contentVerticalAlignment="center" text="Don't have account ?" textAlignment="right" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xxe-2O-08e">
+                                                <rect key="frame" x="0.0" y="7.5" width="130" height="16"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZDy-YV-4gr">
@@ -487,15 +487,24 @@
                                     <constraint firstItem="seJ-B2-RXh" firstAttribute="top" secondItem="A2o-ZS-8yI" secondAttribute="top" id="qxe-ff-IJO"/>
                                 </constraints>
                             </scrollView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="COM-gs-i6o">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="98"/>
+                                <color key="backgroundColor" systemColor="systemOrangeColor"/>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="COM-gs-i6o" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="1tx-l3-Flb"/>
                             <constraint firstItem="A2o-ZS-8yI" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="4ar-Sy-qXT"/>
+                            <constraint firstItem="COM-gs-i6o" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="NA3-e0-o0Q"/>
+                            <constraint firstAttribute="bottom" secondItem="A2o-ZS-8yI" secondAttribute="bottom" id="NgH-GS-TUc"/>
                             <constraint firstItem="A2o-ZS-8yI" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="RUs-pT-Vs2"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="A2o-ZS-8yI" secondAttribute="trailing" id="Xca-JG-yKD"/>
+                            <constraint firstAttribute="trailing" secondItem="COM-gs-i6o" secondAttribute="trailing" id="bYd-ea-meb"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="A2o-ZS-8yI" secondAttribute="bottom" id="iBF-x7-shW"/>
                             <constraint firstItem="seJ-B2-RXh" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="sNT-VC-EZv"/>
+                            <constraint firstItem="COM-gs-i6o" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.1" id="v2q-uf-b4O"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Register Page" id="pNp-qI-EhA"/>
@@ -518,6 +527,7 @@
                         <outlet property="Switch" destination="FQ3-pt-r4s" id="ink-je-eTh"/>
                         <outlet property="SwitchStack" destination="tbr-kc-dhv" id="GYO-A3-Gbq"/>
                         <outlet property="SwitchText" destination="WAf-WZ-1b0" id="mtD-q4-12w"/>
+                        <outlet property="TitleView" destination="COM-gs-i6o" id="e0x-dQ-eyS"/>
                         <outlet property="scrollView" destination="A2o-ZS-8yI" id="Rb5-9L-M6G"/>
                     </connections>
                 </viewController>
@@ -618,6 +628,7 @@
                             <constraint firstItem="kRH-jX-6ox" firstAttribute="height" secondItem="IXZ-1r-hDn" secondAttribute="height" multiplier="0.15" id="2IQ-jT-TsL"/>
                             <constraint firstItem="y4M-TU-xDd" firstAttribute="leading" secondItem="IXZ-1r-hDn" secondAttribute="leading" constant="20" id="4gr-mH-K64"/>
                             <constraint firstItem="y4M-TU-xDd" firstAttribute="centerY" secondItem="5gC-NP-w0Q" secondAttribute="centerY" id="AfW-gC-mG9"/>
+                            <constraint firstItem="IXZ-1r-hDn" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="CPK-cX-8kC" secondAttribute="trailing" symbolic="YES" id="FnJ-VW-zjR"/>
                             <constraint firstItem="IXZ-1r-hDn" firstAttribute="trailing" secondItem="kRH-jX-6ox" secondAttribute="trailing" constant="20" id="JoP-Uh-oA1"/>
                             <constraint firstItem="kRH-jX-6ox" firstAttribute="top" secondItem="y4M-TU-xDd" secondAttribute="bottom" constant="20" id="KTc-it-hdk"/>
                             <constraint firstItem="IXZ-1r-hDn" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="y4M-TU-xDd" secondAttribute="trailing" symbolic="YES" id="L9J-3U-lpd"/>
@@ -672,7 +683,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Calender" width="10" height="9"/>
+        <image name="Calender" width="19.824199676513672" height="17.99799919128418"/>
         <image name="Cross" width="18.339799880981445" height="17.99799919128418"/>
         <image name="Image" width="1687.5" height="1687.5"/>
         <image name="Image 1" width="480" height="336"/>

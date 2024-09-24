@@ -4,6 +4,7 @@ import CryptoKit
 class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
     
     // Outlets for UI components
+    @IBOutlet weak var TitleView: UIView!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var CalenderIcon: UIButton!
     @IBOutlet weak var SwitchText: UITextField!
@@ -133,8 +134,16 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         // Register for keyboard notifications
                   NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
                   NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-      
+        
+        // Customize the title color for this view controller
+//        self.navigationController?.navigationBar.backgroundColor = [
+//                    NSAttributedString.Key.backgroundColor: UIColor.systemOrange // Set the title color to red
+//                ]
+        self.navigationController?.navigationBar.backgroundColor=UIColor.systemOrange
+
     }
+    
+
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true) // Dismiss the keyboard
@@ -207,9 +216,9 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             confirmPassErrorLabel.topAnchor.constraint(equalTo: ConfirmPass.bottomAnchor, constant: 2),
             confirmPassErrorLabel.trailingAnchor.constraint(equalTo: ConfirmPass.trailingAnchor),
             
-            termsErrorLabel.leadingAnchor.constraint(equalTo: Switch.leadingAnchor),
-            termsErrorLabel.topAnchor.constraint(equalTo: Switch.bottomAnchor, constant: 2),
-            termsErrorLabel.trailingAnchor.constraint(equalTo: Switch.trailingAnchor),
+            termsErrorLabel.leadingAnchor.constraint(equalTo: SwitchStack.leadingAnchor),
+            termsErrorLabel.topAnchor.constraint(equalTo: SwitchStack.bottomAnchor, constant: 2),
+            termsErrorLabel.trailingAnchor.constraint(equalTo: SwitchStack.trailingAnchor),
         ])
     }
     
@@ -448,12 +457,14 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
     
     func validateDateOfBirth() {
+        // Check if the DateOfBirth text is empty; if so, skip validation
         guard let dobText = DateOfBirth.text, !dobText.isEmpty else {
-            showError(label: dateOfBirthErrorLabel, message: "Date of Birth is required", for: DateOfBirth)
+            // Clear any existing error if the field is left empty
+            hideError(label: dateOfBirthErrorLabel, for: DateOfBirth)
             return
         }
         
-        // Attempt to parse the date
+        // Attempt to parse the date if not empty
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy" // Ensure this matches your DatePicker's format
         guard let dateOfBirth = dateFormatter.date(from: dobText) else {
@@ -465,6 +476,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         let calendar = Calendar.current
         let now = Date()
         let ageComponents = calendar.dateComponents([.year], from: dateOfBirth, to: now)
+        
         if let age = ageComponents.year, age < 18 {
             showError(label: dateOfBirthErrorLabel, message: "You must be at least 18 years old", for: DateOfBirth)
             return
@@ -474,10 +486,11 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         hideError(label: dateOfBirthErrorLabel, for: DateOfBirth)
     }
 
+
     
     func validateContact() {
         guard let contact = Contact.text, !contact.isEmpty else {
-            showError(label: contactErrorLabel, message: "Contact number is required", for: Contact)
+            hideError(label: contactErrorLabel, for: Contact)
             return
         }
         
@@ -562,44 +575,47 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     @IBAction func dateBtn(_ sender: UIButton) {
         // Create an alert controller
-           let alert = UIAlertController(title: "Select Date of Birth", message: nil, preferredStyle: .alert)
-           
-           // Create and configure the date picker
-           let datePicker = UIDatePicker()
-           datePicker.datePickerMode = .date
-           datePicker.preferredDatePickerStyle = .wheels
-           
-           // Set a minimum date (optional)
+        let alert = UIAlertController(title: "Select Date of Birth", message: nil, preferredStyle: .alert)
+        
+        // Create and configure the date picker
+        let datePicker = UIDatePicker()
+        datePicker.datePickerMode = .date
+        datePicker.preferredDatePickerStyle = .wheels
+        
+        // Set a maximum date (optional) to ensure user is at least 18 years old
         datePicker.maximumDate = Calendar.current.date(byAdding: .year, value: -18, to: Date())
-           
-           // Add the date picker to the alert
-           alert.view.addSubview(datePicker)
-           
-           // Set constraints for the date picker
-           datePicker.translatesAutoresizingMaskIntoConstraints = false
-           datePicker.leadingAnchor.constraint(equalTo: alert.view.leadingAnchor).isActive = true
-           datePicker.trailingAnchor.constraint(equalTo: alert.view.trailingAnchor).isActive = true
-           datePicker.topAnchor.constraint(equalTo: alert.view.topAnchor, constant: 50).isActive = true
-           datePicker.bottomAnchor.constraint(equalTo: alert.view.bottomAnchor, constant: -50).isActive = true
-           
-           // Create and add actions
-           alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-           alert.addAction(UIAlertAction(title: "Done", style: .default, handler: { _ in
-               // Set the date format to dd/MM/yyyy
-               let dateFormatter = DateFormatter()
-               dateFormatter.dateFormat = "dd/MM/yyyy" // Set your desired format here
-               
-               // Set the formatted date in the DateOfBirth text field
-               self.DateOfBirth.text = dateFormatter.string(from: datePicker.date)
-           }))
-           
-           // Set the alert height
-           let height = NSLayoutConstraint(item: alert.view!, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 300)
-           alert.view.addConstraint(height)
-           
-           // Present the alert
-           self.present(alert, animated: true, completion: nil)
+        
+        // Add the date picker to the alert
+        alert.view.addSubview(datePicker)
+        
+        // Set constraints for the date picker with 10 points of padding
+        datePicker.translatesAutoresizingMaskIntoConstraints = false
+        datePicker.leadingAnchor.constraint(equalTo: alert.view.leadingAnchor, constant: 20).isActive = true
+        datePicker.trailingAnchor.constraint(equalTo: alert.view.trailingAnchor, constant: -20).isActive = true
+        datePicker.topAnchor.constraint(equalTo: alert.view.topAnchor, constant: 50).isActive = true
+        datePicker.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        
+        // Create and add actions
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Done", style: .default, handler: { _ in
+            // Set the date format to dd/MM/yyyy
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "dd/MM/yyyy" // Set your desired format here
+            
+            // Set the formatted date in the DateOfBirth text field
+            self.DateOfBirth.text = dateFormatter.string(from: datePicker.date)
+        }))
+        
+        // Adjust the alert view width and height with padding
+        let widthConstraint = NSLayoutConstraint(item: alert.view!, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 320) // Adjust width to account for padding
+        let heightConstraint = NSLayoutConstraint(item: alert.view!, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 300) // Adjust height
+        alert.view.addConstraint(widthConstraint)
+        alert.view.addConstraint(heightConstraint)
+        
+        // Present the alert
+        self.present(alert, animated: true, completion: nil)
     }
+
 
     
     @IBAction func BtnClicked(_ sender: UIButton) {
