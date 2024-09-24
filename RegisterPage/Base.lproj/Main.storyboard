@@ -17,7 +17,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A2o-ZS-8yI">
-                                <rect key="frame" x="0.0" y="64" width="320" height="986"/>
+                                <rect key="frame" x="0.0" y="20" width="320" height="1030"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="seJ-B2-RXh">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="1000"/>
@@ -102,26 +102,31 @@
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S8w-OO-e7l">
                                                         <rect key="frame" x="0.0" y="331" width="300" height="72.5"/>
                                                         <subviews>
-                                                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bbf-gX-RhZ">
+                                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Date Of Birth" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0Vx-Vf-RSj">
                                                                 <rect key="frame" x="10" y="10" width="280" height="52.5"/>
-                                                                <subviews>
-                                                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Date Of Birth" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0Vx-Vf-RSj">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="132" height="52.5"/>
-                                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                                        <textInputTraits key="textInputTraits" textContentType="bday"/>
-                                                                    </textField>
-                                                                    <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" translatesAutoresizingMaskIntoConstraints="NO" id="YRi-zN-iv4">
-                                                                        <rect key="frame" x="132" y="0.0" width="148" height="52.5"/>
-                                                                    </datePicker>
-                                                                </subviews>
-                                                            </stackView>
+                                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                                <textInputTraits key="textInputTraits" textContentType="bday"/>
+                                                            </textField>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0sR-WR-qPn">
+                                                                <rect key="frame" x="266" y="10" width="24" height="50.5"/>
+                                                                <state key="normal" title="Button"/>
+                                                                <buttonConfiguration key="configuration" style="plain">
+                                                                    <backgroundConfiguration key="background" image="Calender" imageContentMode="scaleAspectFit"/>
+                                                                </buttonConfiguration>
+                                                                <connections>
+                                                                    <action selector="dateBtn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="7Pk-7v-ACV"/>
+                                                                </connections>
+                                                            </button>
                                                         </subviews>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="bottom" secondItem="Bbf-gX-RhZ" secondAttribute="bottom" constant="10" id="RiA-NB-Pmj"/>
-                                                            <constraint firstItem="Bbf-gX-RhZ" firstAttribute="top" secondItem="S8w-OO-e7l" secondAttribute="top" constant="10" id="Zmj-Yb-3lm"/>
-                                                            <constraint firstItem="Bbf-gX-RhZ" firstAttribute="leading" secondItem="S8w-OO-e7l" secondAttribute="leading" constant="10" id="cSE-iX-MIH"/>
-                                                            <constraint firstAttribute="trailing" secondItem="Bbf-gX-RhZ" secondAttribute="trailing" constant="10" id="fje-H2-fLF"/>
+                                                            <constraint firstItem="0Vx-Vf-RSj" firstAttribute="leading" secondItem="S8w-OO-e7l" secondAttribute="leading" constant="10" id="8SI-lc-2Zm"/>
+                                                            <constraint firstAttribute="trailing" secondItem="0sR-WR-qPn" secondAttribute="trailing" constant="10" id="DkB-Yw-keT"/>
+                                                            <constraint firstAttribute="bottom" secondItem="0sR-WR-qPn" secondAttribute="bottom" constant="12" id="GFB-kf-aQI"/>
+                                                            <constraint firstAttribute="trailing" secondItem="0Vx-Vf-RSj" secondAttribute="trailing" constant="10" id="OKd-KG-lpg"/>
+                                                            <constraint firstAttribute="bottom" secondItem="0Vx-Vf-RSj" secondAttribute="bottom" constant="10" id="Paq-Dg-3mL"/>
+                                                            <constraint firstItem="0sR-WR-qPn" firstAttribute="top" secondItem="S8w-OO-e7l" secondAttribute="top" constant="10" id="ReJ-xF-GIj"/>
+                                                            <constraint firstItem="0Vx-Vf-RSj" firstAttribute="top" secondItem="S8w-OO-e7l" secondAttribute="top" constant="10" id="v6l-xe-IfN"/>
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MDP-ER-UjT">
@@ -132,13 +137,26 @@
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                 <textInputTraits key="textInputTraits"/>
                                                             </textField>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hmb-ap-7dO">
+                                                                <rect key="frame" x="266" y="10" width="24" height="51"/>
+                                                                <state key="normal" title="Button"/>
+                                                                <buttonConfiguration key="configuration" style="plain">
+                                                                    <backgroundConfiguration key="background" image="Cross" imageContentMode="scaleAspectFit"/>
+                                                                </buttonConfiguration>
+                                                                <connections>
+                                                                    <action selector="crossBtn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="LV7-l9-IUR"/>
+                                                                </connections>
+                                                            </button>
                                                         </subviews>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <constraints>
                                                             <constraint firstItem="VlE-cO-Mga" firstAttribute="top" secondItem="MDP-ER-UjT" secondAttribute="top" constant="10" id="2wb-gq-096"/>
                                                             <constraint firstAttribute="trailing" secondItem="VlE-cO-Mga" secondAttribute="trailing" constant="10" id="JnJ-he-1FO"/>
                                                             <constraint firstItem="VlE-cO-Mga" firstAttribute="leading" secondItem="MDP-ER-UjT" secondAttribute="leading" constant="10" id="JuQ-kZ-TaW"/>
+                                                            <constraint firstAttribute="bottom" secondItem="Hmb-ap-7dO" secondAttribute="bottom" constant="12" id="KIF-6r-CHE"/>
                                                             <constraint firstAttribute="bottom" secondItem="VlE-cO-Mga" secondAttribute="bottom" constant="10" id="VRs-or-POj"/>
+                                                            <constraint firstItem="Hmb-ap-7dO" firstAttribute="top" secondItem="MDP-ER-UjT" secondAttribute="top" constant="10" id="gbV-MX-B64"/>
+                                                            <constraint firstAttribute="trailing" secondItem="Hmb-ap-7dO" secondAttribute="trailing" constant="10" id="wTU-TV-0dj"/>
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LF7-xM-tfV">
@@ -297,13 +315,14 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Register Page" id="pNp-qI-EhA"/>
+                    <nil key="simulatedTopBarMetrics"/>
                     <size key="freeformSize" width="320" height="1050"/>
                     <connections>
+                        <outlet property="CalenderIcon" destination="0sR-WR-qPn" id="ss8-1y-bB1"/>
                         <outlet property="ConfirmPass" destination="VEb-Sy-iBN" id="hgA-vi-5JI"/>
                         <outlet property="Contact" destination="rJe-n7-EBI" id="Xud-Of-Oi8"/>
                         <outlet property="Country" destination="VlE-cO-Mga" id="OJJ-qY-Wzb"/>
                         <outlet property="DateOfBirth" destination="0Vx-Vf-RSj" id="HhX-Tc-W1A"/>
-                        <outlet property="DatePicker" destination="YRi-zN-iv4" id="dW3-nQ-xYe"/>
                         <outlet property="Email" destination="3rX-aN-eMz" id="7um-NS-1VP"/>
                         <outlet property="FirstName" destination="6IY-vO-UW0" id="YpM-gp-Ehy"/>
                         <outlet property="Gender" destination="fPm-tp-6OA" id="9Zk-8a-quQ"/>
@@ -316,6 +335,7 @@
                         <outlet property="Switch" destination="FQ3-pt-r4s" id="ink-je-eTh"/>
                         <outlet property="SwitchStack" destination="tbr-kc-dhv" id="GYO-A3-Gbq"/>
                         <outlet property="SwitchText" destination="WAf-WZ-1b0" id="mtD-q4-12w"/>
+                        <outlet property="scrollView" destination="A2o-ZS-8yI" id="SlH-Yg-IPS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -436,13 +456,23 @@
         <scene sceneID="eC6-fc-jpO">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="U6S-eN-Blk" sceneMemberID="viewController">
+                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="W8R-We-W9i">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="W8R-We-W9i">
                         <rect key="frame" x="0.0" y="20" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" systemColor="systemOrangeColor"/>
+                        <color key="backgroundColor" systemColor="systemOrangeColor"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textShadowColor" systemColor="systemOrangeColor"/>
+                        </textAttributes>
+                        <navigationBarAppearance key="scrollEdgeAppearance">
+                            <color key="backgroundColor" systemColor="systemOrangeColor"/>
+                        </navigationBarAppearance>
                     </navigationBar>
                     <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Sbv-YE-vh7">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="wbI-dX-Ga9"/>
                     </connections>
@@ -453,12 +483,14 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Calender" width="10" height="9"/>
+        <image name="Cross" width="18.339799880981445" height="17.99799919128418"/>
         <image name="Image" width="1687.5" height="1687.5"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemOrangeColor">
-            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

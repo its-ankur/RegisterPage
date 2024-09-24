@@ -4,7 +4,8 @@ import CryptoKit
 class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
     
     // Outlets for UI components
-    @IBOutlet weak var DatePicker: UIDatePicker!
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var CalenderIcon: UIButton!
     @IBOutlet weak var SwitchText: UITextField!
     @IBOutlet weak var GenderText: UITextField!
     @IBOutlet weak var Switch: UISwitch!
@@ -35,6 +36,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     // MARK: - Picker View
     var countryPicker: UIPickerView!
+    var activeTextField: UITextField?
     let countries = ["USA", "Canada", "UK", "India", "Australia"]
     
     // Create a date formatter
@@ -47,6 +49,15 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+//        // Extend the view to the edges of the screen, covering the status bar
+//            self.edgesForExtendedLayout = []
+//
+//            // Set the background color of the view to match the desired status bar color
+//        self.view.backgroundColor = UIColor.systemOrange
+//            
+//            // Optionally, change the navigation bar color as well
+        self.navigationController?.navigationBar.barTintColor = UIColor.systemOrange
         
         // Initialize error labels
         setupErrorLabels()
@@ -94,11 +105,8 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         // Initialize Database
         DatabaseHelper.shared.initializeDatabase()
         
-        // Set DatePicker mode
-        DatePicker.datePickerMode = .date
-        
         // Add action to date picker
-        DatePicker.addTarget(self, action: #selector(dateChanged(_:)), for: .valueChanged)
+        CalenderIcon.addTarget(self, action: #selector(dateChanged(_:)), for: .valueChanged)
         
         // **Enable password toggle for Password and ConfirmPass fields**
         Password.enablePasswordToggle()
@@ -118,7 +126,17 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
         Contact.keyboardType = .numberPad
         
+        // Register for keyboard notifications
+            NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
     }
+    
+    deinit {
+        // Unregister from notifications
+        NotificationCenter.default.removeObserver(self)
+    }
+
     
     // MARK: - Setup Functions
     
@@ -263,52 +281,85 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
     
     // MARK: - TextField Delegate Methods
-    
+
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        // Handle real-time validation based on the text field
         if textField == FirstName {
             validateFirstName()
         } else if textField == Email {
             validateEmail()
         } else if textField == Contact {
-//            validateContact()
+            // Real-time validation for Contact commented out
         } else if textField == DateOfBirth {
-//            validateDateOfBirth()
+            // Handle DateOfBirth as a text input without DatePicker
+                                    let newText = (textField.text! as NSString).replacingCharacters(in: range, with: string)
+                                    
+                                    // Custom validation for date format (dd/MM/yyyy)
+                                    if newText.count <= 10 { // Limit input to 10 characters (dd/MM/yyyy)
+                                        // Allow numbers and '/'
+                                        let allowedCharacters = CharacterSet(charactersIn: "0123456789/")
+                                        let characterSet = CharacterSet(charactersIn: string)
+                                        return allowedCharacters.isSuperset(of: characterSet)
+                                    } else {
+                                        // Prevent more than 10 characters from being entered
+                                        return false
+                                    }
         } else if textField == Country {
-            validateCountry()
+            //validateCountry()
+            return false
         } else if textField == Password {
             validatePassword()
         } else if textField == ConfirmPass {
-            // Removed real-time validation from delegate
-            // validateConfirmPassword()
+            // Real-time validation for ConfirmPass is disabled
         }
-        // Allow the text to change
-                let newText = (textField.text! as NSString).replacingCharacters(in: range, with: string)
 
-                // Check if the new text is a valid date
-                if let date = dateFormatter.date(from: newText) {
-                    DatePicker.setDate(date, animated: true)
-                }
+        // Allow text change to proceed for other fields
         return true
     }
-    
+
     func textFieldDidEndEditing(_ textField: UITextField) {
+        activeTextField=nil
+        // Perform validation once editing ends for the specific fields
         if textField == FirstName {
             validateFirstName()
         } else if textField == Email {
             validateEmail()
         } else if textField == Contact {
-            //validateContact()
+            // Validation after editing ends
         } else if textField == DateOfBirth {
-            //validateDateOfBirth()
+            // Validate the date format when editing ends
+            if !isValidDateFormat(textField.text!) {
+                // Handle invalid date format (e.g., show an error message)
+                showInvalidDateFormatMessage()
+            }
         } else if textField == Country {
-            validateCountry()
+            //validateCountry()
         } else if textField == Password {
             validatePassword()
         } else if textField == ConfirmPass {
-            // Removed real-time validation from delegate
-            // validateConfirmPassword()
+            // Real-time validation for ConfirmPass is disabled
         }
     }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+            activeTextField = textField // Track the active text field
+        }
+
+
+    // Helper method to validate date format (dd/MM/yyyy)
+    func isValidDateFormat(_ dateText: String) -> Bool {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd/MM/yyyy"
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        return dateFormatter.date(from: dateText) != nil
+    }
+
+    // Helper method to show an invalid date format message
+    func showInvalidDateFormatMessage() {
+        // Implement your custom error message here, e.g., an alert or inline label
+        print("Invalid date format. Please enter the date in DD/MM/YYYY format.")
+    }
+
     
     // MARK: - Validation Functions
     
@@ -490,6 +541,35 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     // MARK: - Button Actions
     
+    @IBAction func crossBtn(_ sender: UIButton) {
+        Country.text = ""
+    }
+    
+    @IBAction func dateBtn(_ sender: UIButton) {
+        let datePicker = UIDatePicker()
+        datePicker.datePickerMode = .date
+        datePicker.preferredDatePickerStyle = .wheels
+        datePicker.addTarget(self, action: #selector(dateChanged(_:)), for: .valueChanged)
+        
+        let alert = UIAlertController(title: "Select Date", message: nil, preferredStyle: .actionSheet)
+        alert.view.addSubview(datePicker)
+        
+        let height = NSLayoutConstraint(item: alert.view!, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 300)
+        alert.view.addConstraint(height)
+        
+        alert.addAction(UIAlertAction(title: "Done", style: .default, handler: { _ in
+            // Set the date format to dd/MM/yyyy
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "dd/MM/yyyy" // Set your desired format here
+            
+            // Set the formatted date in the DateOfBirth text field
+            self.DateOfBirth.text = dateFormatter.string(from: datePicker.date)
+        }))
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+
+    
     @IBAction func BtnClicked(_ sender: UIButton) {
         print("Register button clicked")
         
@@ -500,9 +580,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         validatePassword()
         validateConfirmPassword()
         validateSwitch()
-        validateDateOfBirth()
-        validateContact()
-        validateCountry()
         
         // Check if there are no validation errors
         let isFormValid = firstNameErrorLabel.isHidden &&
@@ -615,12 +692,9 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
     
     @objc func dateChanged(_ sender: UIDatePicker) {
-        // Create date formatter
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .medium
         
         // Set the formatted date in the text field
-        DateOfBirth.text = dateFormatter.string(from: sender.date)
+        DateOfBirth.text = formatDateToString(date: sender.date)
     }
     
     @objc func switchValueChanged(){
@@ -645,6 +719,39 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         @objc func datePickerValueChanged(_ sender: UIDatePicker) {
             DateOfBirth.text = dateFormatter.string(from: sender.date)
         }
+    
+    // Format date to "dd/MM/yyyy"
+        func formatDateToString(date: Date) -> String {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "dd/MM/yyyy"
+            return dateFormatter.string(from: date)
+        }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            // Adjust the bottom inset of the scroll view or content inset
+            let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
+            scrollView.contentInset = contentInsets
+            scrollView.scrollIndicatorInsets = contentInsets
+            
+            // Scroll the active text field into view
+            if let activeField = activeTextField { // assuming you have a reference to the active text field
+                let aRect = self.view.frame
+                if !aRect.contains(activeField.frame.origin) {
+                    let scrollPoint = CGPoint(x: 0, y: activeField.frame.origin.y - keyboardSize.height)
+                    scrollView.setContentOffset(scrollPoint, animated: true)
+                }
+            }
+        }
+    }
+
+    @objc func keyboardWillHide(notification: NSNotification) {
+        // Reset the content inset when the keyboard is hidden
+        let contentInsets = UIEdgeInsets.zero
+        scrollView.contentInset = contentInsets
+        scrollView.scrollIndicatorInsets = contentInsets
+    }
+
     
 }
 
