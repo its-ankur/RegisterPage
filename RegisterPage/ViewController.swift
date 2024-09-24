@@ -126,11 +126,20 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
         Contact.keyboardType = .numberPad
         
-        // Register for keyboard notifications
-            NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-            NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        // Add tap gesture recognizer
+               let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+               view.addGestureRecognizer(tapGesture)
         
+        // Register for keyboard notifications
+                  NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+                  NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+      
     }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true) // Dismiss the keyboard
+    }
+
     
     deinit {
         // Unregister from notifications
@@ -312,6 +321,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         } else if textField == ConfirmPass {
             // Real-time validation for ConfirmPass is disabled
         }
+        //textField.resignFirstResponder() // This will hide the keyboard
 
         // Allow text change to proceed for other fields
         return true
@@ -343,6 +353,11 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
             activeTextField = textField // Track the active text field
+        }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+            textField.resignFirstResponder() // Hide the keyboard
+            return true
         }
 
 
@@ -546,27 +561,44 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
     
     @IBAction func dateBtn(_ sender: UIButton) {
-        let datePicker = UIDatePicker()
-        datePicker.datePickerMode = .date
-        datePicker.preferredDatePickerStyle = .wheels
-        datePicker.addTarget(self, action: #selector(dateChanged(_:)), for: .valueChanged)
-        
-        let alert = UIAlertController(title: "Select Date", message: nil, preferredStyle: .actionSheet)
-        alert.view.addSubview(datePicker)
-        
-        let height = NSLayoutConstraint(item: alert.view!, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 300)
-        alert.view.addConstraint(height)
-        
-        alert.addAction(UIAlertAction(title: "Done", style: .default, handler: { _ in
-            // Set the date format to dd/MM/yyyy
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "dd/MM/yyyy" // Set your desired format here
-            
-            // Set the formatted date in the DateOfBirth text field
-            self.DateOfBirth.text = dateFormatter.string(from: datePicker.date)
-        }))
-        
-        self.present(alert, animated: true, completion: nil)
+        // Create an alert controller
+           let alert = UIAlertController(title: "Select Date of Birth", message: nil, preferredStyle: .alert)
+           
+           // Create and configure the date picker
+           let datePicker = UIDatePicker()
+           datePicker.datePickerMode = .date
+           datePicker.preferredDatePickerStyle = .wheels
+           
+           // Set a minimum date (optional)
+        datePicker.maximumDate = Calendar.current.date(byAdding: .year, value: -18, to: Date())
+           
+           // Add the date picker to the alert
+           alert.view.addSubview(datePicker)
+           
+           // Set constraints for the date picker
+           datePicker.translatesAutoresizingMaskIntoConstraints = false
+           datePicker.leadingAnchor.constraint(equalTo: alert.view.leadingAnchor).isActive = true
+           datePicker.trailingAnchor.constraint(equalTo: alert.view.trailingAnchor).isActive = true
+           datePicker.topAnchor.constraint(equalTo: alert.view.topAnchor, constant: 50).isActive = true
+           datePicker.bottomAnchor.constraint(equalTo: alert.view.bottomAnchor, constant: -50).isActive = true
+           
+           // Create and add actions
+           alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+           alert.addAction(UIAlertAction(title: "Done", style: .default, handler: { _ in
+               // Set the date format to dd/MM/yyyy
+               let dateFormatter = DateFormatter()
+               dateFormatter.dateFormat = "dd/MM/yyyy" // Set your desired format here
+               
+               // Set the formatted date in the DateOfBirth text field
+               self.DateOfBirth.text = dateFormatter.string(from: datePicker.date)
+           }))
+           
+           // Set the alert height
+           let height = NSLayoutConstraint(item: alert.view!, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 300)
+           alert.view.addConstraint(height)
+           
+           // Present the alert
+           self.present(alert, animated: true, completion: nil)
     }
 
     
@@ -615,17 +647,12 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 // Save user details to UserDefaults (optional)
                 let userDefaults = UserDefaults.standard
                 userDefaults.set(email, forKey: "Email")
-                userDefaults.set(true, forKey: "isUserLoggedIn")
-                
-                
                 
                 // Show success toast message
                 CustomToast.showToast(message: "Registration Successful!", inView: self.view, backgroundColor: UIColor.systemGreen)
                 
                 // Reset the form
                 resetForm()
-                
-                
                 
                 // Navigate to ShowDetailsViewController
                 if let detailsViewController = self.storyboard?.instantiateViewController(withIdentifier: "ShowDetailsViewController") as? ShowDetailsViewController {
@@ -733,21 +760,21 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }
     
     @objc func keyboardWillShow(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            // Adjust the bottom inset of the scroll view or content inset
-            let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
+        guard let userInfo = notification.userInfo,
+                  let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
+            
+            let keyboardHeight = keyboardFrame.cgRectValue.height
+            let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight, right: 0)
             scrollView.contentInset = contentInsets
             scrollView.scrollIndicatorInsets = contentInsets
             
-            // Scroll the active text field into view
-            if let activeField = activeTextField { // assuming you have a reference to the active text field
+            if let activeField = activeTextField {
                 let aRect = self.view.frame
                 if !aRect.contains(activeField.frame.origin) {
-                    let scrollPoint = CGPoint(x: 0, y: activeField.frame.origin.y - keyboardSize.height)
-                    scrollView.setContentOffset(scrollPoint, animated: true)
+                    scrollView.scrollRectToVisible(activeField.frame, animated: true)
                 }
             }
-        }
+
     }
 
     @objc func keyboardWillHide(notification: NSNotification) {
@@ -756,6 +783,12 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         scrollView.contentInset = contentInsets
         scrollView.scrollIndicatorInsets = contentInsets
     }
+    
+    // Method to dismiss the keyboard
+        @objc func dismissKeyboard() {
+            view.endEditing(true) // Hides the keyboard
+        }
+
 
     
 }
