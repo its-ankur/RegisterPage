@@ -286,26 +286,31 @@
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S8w-OO-e7l">
                                                         <rect key="frame" x="0.0" y="331" width="300" height="72.5"/>
                                                         <subviews>
-                                                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bbf-gX-RhZ">
+                                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Date Of Birth" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0Vx-Vf-RSj">
                                                                 <rect key="frame" x="10" y="10" width="280" height="52.5"/>
-                                                                <subviews>
-                                                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Date Of Birth" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0Vx-Vf-RSj">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="132" height="52.5"/>
-                                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                                        <textInputTraits key="textInputTraits" textContentType="bday"/>
-                                                                    </textField>
-                                                                    <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" translatesAutoresizingMaskIntoConstraints="NO" id="YRi-zN-iv4">
-                                                                        <rect key="frame" x="132" y="0.0" width="148" height="52.5"/>
-                                                                    </datePicker>
-                                                                </subviews>
-                                                            </stackView>
+                                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                                <textInputTraits key="textInputTraits" textContentType="bday"/>
+                                                            </textField>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BVz-Xm-fJ7">
+                                                                <rect key="frame" x="266" y="10" width="24" height="50.5"/>
+                                                                <state key="normal" title="Button"/>
+                                                                <buttonConfiguration key="configuration" style="plain">
+                                                                    <backgroundConfiguration key="background" image="Calender" imageContentMode="scaleAspectFit"/>
+                                                                </buttonConfiguration>
+                                                                <connections>
+                                                                    <action selector="dateBtn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="eai-Zp-eqM"/>
+                                                                </connections>
+                                                            </button>
                                                         </subviews>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="bottom" secondItem="Bbf-gX-RhZ" secondAttribute="bottom" constant="10" id="RiA-NB-Pmj"/>
-                                                            <constraint firstItem="Bbf-gX-RhZ" firstAttribute="top" secondItem="S8w-OO-e7l" secondAttribute="top" constant="10" id="Zmj-Yb-3lm"/>
-                                                            <constraint firstItem="Bbf-gX-RhZ" firstAttribute="leading" secondItem="S8w-OO-e7l" secondAttribute="leading" constant="10" id="cSE-iX-MIH"/>
-                                                            <constraint firstAttribute="trailing" secondItem="Bbf-gX-RhZ" secondAttribute="trailing" constant="10" id="fje-H2-fLF"/>
+                                                            <constraint firstItem="0Vx-Vf-RSj" firstAttribute="top" secondItem="S8w-OO-e7l" secondAttribute="top" constant="10" id="FSt-As-GJj"/>
+                                                            <constraint firstItem="BVz-Xm-fJ7" firstAttribute="top" secondItem="S8w-OO-e7l" secondAttribute="top" constant="10" id="KGS-WU-V58"/>
+                                                            <constraint firstAttribute="trailing" secondItem="0Vx-Vf-RSj" secondAttribute="trailing" constant="10" id="KiU-dq-ITe"/>
+                                                            <constraint firstAttribute="trailing" secondItem="BVz-Xm-fJ7" secondAttribute="trailing" constant="10" id="iX8-nv-gny"/>
+                                                            <constraint firstAttribute="bottom" secondItem="BVz-Xm-fJ7" secondAttribute="bottom" constant="12" id="khr-Sg-9wp"/>
+                                                            <constraint firstItem="0Vx-Vf-RSj" firstAttribute="leading" secondItem="S8w-OO-e7l" secondAttribute="leading" constant="10" id="mAl-ac-uYt"/>
+                                                            <constraint firstAttribute="bottom" secondItem="0Vx-Vf-RSj" secondAttribute="bottom" constant="10" id="xMd-kZ-RQV"/>
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MDP-ER-UjT">
@@ -316,13 +321,26 @@
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                 <textInputTraits key="textInputTraits"/>
                                                             </textField>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rqo-0E-ofZ">
+                                                                <rect key="frame" x="266" y="10" width="24" height="51"/>
+                                                                <state key="normal" title="Button"/>
+                                                                <buttonConfiguration key="configuration" style="plain">
+                                                                    <backgroundConfiguration key="background" image="Cross" imageContentMode="scaleAspectFit"/>
+                                                                </buttonConfiguration>
+                                                                <connections>
+                                                                    <action selector="crossBtn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xzI-R4-WC5"/>
+                                                                </connections>
+                                                            </button>
                                                         </subviews>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <constraints>
                                                             <constraint firstItem="VlE-cO-Mga" firstAttribute="top" secondItem="MDP-ER-UjT" secondAttribute="top" constant="10" id="2wb-gq-096"/>
+                                                            <constraint firstAttribute="trailing" secondItem="rqo-0E-ofZ" secondAttribute="trailing" constant="10" id="Dtt-mp-mRF"/>
                                                             <constraint firstAttribute="trailing" secondItem="VlE-cO-Mga" secondAttribute="trailing" constant="10" id="JnJ-he-1FO"/>
                                                             <constraint firstItem="VlE-cO-Mga" firstAttribute="leading" secondItem="MDP-ER-UjT" secondAttribute="leading" constant="10" id="JuQ-kZ-TaW"/>
+                                                            <constraint firstAttribute="bottom" secondItem="rqo-0E-ofZ" secondAttribute="bottom" constant="12" id="UiY-68-hGs"/>
                                                             <constraint firstAttribute="bottom" secondItem="VlE-cO-Mga" secondAttribute="bottom" constant="10" id="VRs-or-POj"/>
+                                                            <constraint firstItem="rqo-0E-ofZ" firstAttribute="top" secondItem="MDP-ER-UjT" secondAttribute="top" constant="10" id="hxn-vI-pUK"/>
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LF7-xM-tfV">
@@ -483,11 +501,11 @@
                     <navigationItem key="navigationItem" title="Register Page" id="pNp-qI-EhA"/>
                     <size key="freeformSize" width="320" height="1050"/>
                     <connections>
+                        <outlet property="CalenderIcon" destination="rqo-0E-ofZ" id="DpZ-A8-nQY"/>
                         <outlet property="ConfirmPass" destination="VEb-Sy-iBN" id="hgA-vi-5JI"/>
                         <outlet property="Contact" destination="rJe-n7-EBI" id="Xud-Of-Oi8"/>
                         <outlet property="Country" destination="VlE-cO-Mga" id="OJJ-qY-Wzb"/>
-                        <outlet property="DateOfBirth" destination="0Vx-Vf-RSj" id="HhX-Tc-W1A"/>
-                        <outlet property="DatePicker" destination="YRi-zN-iv4" id="dW3-nQ-xYe"/>
+                        <outlet property="DateOfBirth" destination="0Vx-Vf-RSj" id="A8a-dW-28g"/>
                         <outlet property="Email" destination="3rX-aN-eMz" id="7um-NS-1VP"/>
                         <outlet property="FirstName" destination="6IY-vO-UW0" id="YpM-gp-Ehy"/>
                         <outlet property="Gender" destination="fPm-tp-6OA" id="9Zk-8a-quQ"/>
@@ -500,6 +518,7 @@
                         <outlet property="Switch" destination="FQ3-pt-r4s" id="ink-je-eTh"/>
                         <outlet property="SwitchStack" destination="tbr-kc-dhv" id="GYO-A3-Gbq"/>
                         <outlet property="SwitchText" destination="WAf-WZ-1b0" id="mtD-q4-12w"/>
+                        <outlet property="scrollView" destination="A2o-ZS-8yI" id="Rb5-9L-M6G"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -580,6 +599,18 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z1G-YX-cW8">
+                                <rect key="frame" x="30" y="416.5" width="260" height="37"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="LOGOUT" titleAlignment="center">
+                                    <fontDescription key="titleFontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="19"/>
+                                    <color key="baseForegroundColor" systemColor="secondarySystemBackgroundColor"/>
+                                    <color key="baseBackgroundColor" red="0.62745098039215685" green="0.27843137254901962" blue="0.27843137254901962" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="logoutButtonTapped:" destination="cd1-x1-wSD" eventType="touchUpInside" id="C78-6h-hpn"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="IXZ-1r-hDn"/>
                         <color key="backgroundColor" systemColor="systemOrangeColor"/>
@@ -596,9 +627,12 @@
                             <constraint firstItem="CPK-cX-8kC" firstAttribute="top" secondItem="IXZ-1r-hDn" secondAttribute="top" constant="10" id="XEq-pO-apO"/>
                             <constraint firstItem="IXZ-1r-hDn" firstAttribute="trailing" secondItem="AUb-Xz-SOi" secondAttribute="trailing" constant="20" id="acE-yJ-s5s"/>
                             <constraint firstItem="AUb-Xz-SOi" firstAttribute="centerX" secondItem="5gC-NP-w0Q" secondAttribute="centerX" id="ene-Mw-gff"/>
+                            <constraint firstItem="z1G-YX-cW8" firstAttribute="leading" secondItem="IXZ-1r-hDn" secondAttribute="leading" constant="30" id="erG-Ye-nPb"/>
                             <constraint firstItem="y4M-TU-xDd" firstAttribute="top" secondItem="IPi-f3-2Nc" secondAttribute="bottom" constant="20" id="gSn-K5-nsr"/>
                             <constraint firstItem="CPK-cX-8kC" firstAttribute="leading" secondItem="IXZ-1r-hDn" secondAttribute="leading" constant="20" id="l4g-NX-g08"/>
+                            <constraint firstItem="IXZ-1r-hDn" firstAttribute="trailing" secondItem="z1G-YX-cW8" secondAttribute="trailing" constant="30" id="mLh-hF-04I"/>
                             <constraint firstItem="IPi-f3-2Nc" firstAttribute="top" secondItem="AUb-Xz-SOi" secondAttribute="bottom" constant="10" id="o70-lp-8TW"/>
+                            <constraint firstItem="z1G-YX-cW8" firstAttribute="top" secondItem="kRH-jX-6ox" secondAttribute="bottom" constant="20" id="oJz-1o-Yme"/>
                             <constraint firstItem="IPi-f3-2Nc" firstAttribute="leading" secondItem="IXZ-1r-hDn" secondAttribute="leading" constant="20" id="q42-gw-PGf"/>
                             <constraint firstItem="kRH-jX-6ox" firstAttribute="leading" secondItem="IXZ-1r-hDn" secondAttribute="leading" constant="20" id="tjc-pG-VGA"/>
                             <constraint firstItem="IPi-f3-2Nc" firstAttribute="centerX" secondItem="5gC-NP-w0Q" secondAttribute="centerX" id="wis-2u-vKg"/>
@@ -638,10 +672,15 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Calender" width="10" height="9"/>
+        <image name="Cross" width="18.339799880981445" height="17.99799919128418"/>
         <image name="Image" width="1687.5" height="1687.5"/>
         <image name="Image 1" width="480" height="336"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="secondarySystemBackgroundColor">
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

@@ -23,9 +23,25 @@ class LoginPageViewController: UIViewController, UITextFieldDelegate {
     // MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
-        setupTapGesture()
+        
+        // Initialize Database
+        DatabaseHelper.shared.initializeDatabase()
+        
+        if UserDefaults.standard.bool(forKey: "isUserLoggedIn") {
+            navigateToUserDetailsPage()
+        }
+        else{
+            setupUI()
+            setupTapGesture()
+        }
     }
+    
+    private func navigateToUserDetailsPage() {
+        if let detailsViewController = self.storyboard?.instantiateViewController(withIdentifier: "ShowDetailsViewController") as? ShowDetailsViewController {
+            navigationController?.pushViewController(detailsViewController, animated: true)
+        }
+    }
+
     
     // MARK: - UI Setup
     private func setupUI() {
