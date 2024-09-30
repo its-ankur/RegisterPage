@@ -671,7 +671,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 resetForm()
                 
                 // Navigate to ShowDetailsViewController
-                if let detailsViewController = self.storyboard?.instantiateViewController(withIdentifier: "ShowDetailsViewController") as? ShowDetailsViewController {
+                if let detailsViewController = self.storyboard?.instantiateViewController(withIdentifier: "ProfilePage") as? ProfilePage {
                     navigationController?.pushViewController(detailsViewController, animated: true)
                 }
             } else {

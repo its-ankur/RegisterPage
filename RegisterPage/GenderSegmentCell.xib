@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="GenderSegmentCell" rowHeight="111" id="KGk-i7-Jjw" customClass="GenderSegmentCell" customModule="RegisterPage" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="578" height="111"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="578" height="111"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H5I-yc-AJs">
+                        <rect key="frame" x="0.0" y="0.0" width="578" height="111"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Select Gender" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fyx-tg-Tz9">
+                                <rect key="frame" x="25" y="10" width="528" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="nWE-X8-def"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Ngr-hn-INv">
+                                <rect key="frame" x="25" y="40" width="528" height="31"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="OI0-et-Nca"/>
+                                </constraints>
+                                <segments>
+                                    <segment title="Male"/>
+                                    <segment title="Female"/>
+                                    <segment title="Other"/>
+                                </segments>
+                            </segmentedControl>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hLu-0b-VtG">
+                                <rect key="frame" x="25" y="75" width="528" height="1"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="lyW-Nb-YBu"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="1" id="wRt-w8-nHu"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gender is Required" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lEe-Rx-xN6">
+                                <rect key="frame" x="25" y="77" width="528" height="15"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                                <color key="textColor" systemColor="systemRedColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="lEe-Rx-xN6" secondAttribute="trailing" constant="25" id="AoU-jM-Gob"/>
+                            <constraint firstItem="lEe-Rx-xN6" firstAttribute="top" secondItem="hLu-0b-VtG" secondAttribute="bottom" constant="1" id="PTQ-Mr-geE"/>
+                            <constraint firstItem="Ngr-hn-INv" firstAttribute="top" secondItem="fyx-tg-Tz9" secondAttribute="bottom" constant="10" id="R3b-qd-iGa"/>
+                            <constraint firstItem="fyx-tg-Tz9" firstAttribute="leading" secondItem="H5I-yc-AJs" secondAttribute="leading" constant="25" id="Wb0-O6-hSI"/>
+                            <constraint firstItem="lEe-Rx-xN6" firstAttribute="leading" secondItem="H5I-yc-AJs" secondAttribute="leading" constant="25" id="aa0-UN-Ge5"/>
+                            <constraint firstAttribute="trailing" secondItem="fyx-tg-Tz9" secondAttribute="trailing" constant="25" id="dEP-Si-Lgl"/>
+                            <constraint firstItem="hLu-0b-VtG" firstAttribute="top" secondItem="Ngr-hn-INv" secondAttribute="bottom" constant="5" id="dY7-It-0sd"/>
+                            <constraint firstItem="hLu-0b-VtG" firstAttribute="leading" secondItem="H5I-yc-AJs" secondAttribute="leading" constant="25" id="hyY-cv-Y9q"/>
+                            <constraint firstItem="fyx-tg-Tz9" firstAttribute="top" secondItem="H5I-yc-AJs" secondAttribute="top" constant="10" id="j9W-3F-aY3"/>
+                            <constraint firstAttribute="trailing" secondItem="Ngr-hn-INv" secondAttribute="trailing" constant="25" id="pOW-hC-xqO"/>
+                            <constraint firstAttribute="trailing" secondItem="hLu-0b-VtG" secondAttribute="trailing" constant="25" id="utR-XL-4Je"/>
+                            <constraint firstItem="Ngr-hn-INv" firstAttribute="leading" secondItem="H5I-yc-AJs" secondAttribute="leading" constant="25" id="x8g-k3-zGs"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="H5I-yc-AJs" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="2IV-JI-Xo5"/>
+                    <constraint firstItem="H5I-yc-AJs" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="5ey-vf-6Uu"/>
+                    <constraint firstAttribute="trailing" secondItem="H5I-yc-AJs" secondAttribute="trailing" id="RtI-PJ-bfy"/>
+                    <constraint firstAttribute="bottom" secondItem="H5I-yc-AJs" secondAttribute="bottom" id="S5e-Do-2L0"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="ErrorLabel" destination="lEe-Rx-xN6" id="PNf-Bh-fcZ"/>
+                <outlet property="GenderSegment" destination="Ngr-hn-INv" id="nk0-Pp-3rb"/>
+            </connections>
+            <point key="canvasLocation" x="35.114503816793892" y="23.591549295774648"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

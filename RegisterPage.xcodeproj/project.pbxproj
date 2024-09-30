@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D6B6A052CA5328200F97D1B /* Untitled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D6B6A042CA5327D00F97D1B /* Untitled.swift */; };
 		0DBA7F3F2C9D4C9F000400B5 /* FMDB in Frameworks */ = {isa = PBXBuildFile; productRef = 0DBA7F3E2C9D4C9F000400B5 /* FMDB */; };
 		0DBA7F422C9D4CD0000400B5 /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 0DBA7F412C9D4CD0000400B5 /* SQLite */; };
 /* End PBXBuildFile section */
@@ -29,9 +30,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0DBA7EED2C9D28E9000400B5 /* RegisterPage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RegisterPage.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		0DBA7F032C9D28EB000400B5 /* RegisterPageTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RegisterPageTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		0DBA7F0D2C9D28EB000400B5 /* RegisterPageUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RegisterPageUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0D6B6A042CA5327D00F97D1B /* Untitled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Untitled.swift; sourceTree = "<group>"; };
+		0D6F42572CA661A500111297 /* RegisterPage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RegisterPage.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0D6F42582CA661A500111297 /* RegisterPageTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RegisterPageTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0D6F42592CA661A500111297 /* RegisterPageUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RegisterPageUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -39,6 +41,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
+				Untitled.swift,
 			);
 			target = 0DBA7EEC2C9D28E9000400B5 /* RegisterPage */;
 		};
@@ -98,18 +101,11 @@
 				0DBA7EEF2C9D28E9000400B5 /* RegisterPage */,
 				0DBA7F062C9D28EB000400B5 /* RegisterPageTests */,
 				0DBA7F102C9D28EB000400B5 /* RegisterPageUITests */,
-				0DBA7EEE2C9D28E9000400B5 /* Products */,
+				0D6B6A042CA5327D00F97D1B /* Untitled.swift */,
+				0D6F42572CA661A500111297 /* RegisterPage.app */,
+				0D6F42582CA661A500111297 /* RegisterPageTests.xctest */,
+				0D6F42592CA661A500111297 /* RegisterPageUITests.xctest */,
 			);
-			sourceTree = "<group>";
-		};
-		0DBA7EEE2C9D28E9000400B5 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				0DBA7EED2C9D28E9000400B5 /* RegisterPage.app */,
-				0DBA7F032C9D28EB000400B5 /* RegisterPageTests.xctest */,
-				0DBA7F0D2C9D28EB000400B5 /* RegisterPageUITests.xctest */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -136,7 +132,7 @@
 				0DBA7F412C9D4CD0000400B5 /* SQLite */,
 			);
 			productName = RegisterPage;
-			productReference = 0DBA7EED2C9D28E9000400B5 /* RegisterPage.app */;
+			productReference = 0D6F42572CA661A500111297 /* RegisterPage.app */;
 			productType = "com.apple.product-type.application";
 		};
 		0DBA7F022C9D28EB000400B5 /* RegisterPageTests */ = {
@@ -159,7 +155,7 @@
 			packageProductDependencies = (
 			);
 			productName = RegisterPageTests;
-			productReference = 0DBA7F032C9D28EB000400B5 /* RegisterPageTests.xctest */;
+			productReference = 0D6F42582CA661A500111297 /* RegisterPageTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		0DBA7F0C2C9D28EB000400B5 /* RegisterPageUITests */ = {
@@ -182,7 +178,7 @@
 			packageProductDependencies = (
 			);
 			productName = RegisterPageUITests;
-			productReference = 0DBA7F0D2C9D28EB000400B5 /* RegisterPageUITests.xctest */;
+			productReference = 0D6F42592CA661A500111297 /* RegisterPageUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -222,7 +218,7 @@
 				0DBA7F402C9D4CD0000400B5 /* XCRemoteSwiftPackageReference "SQLite" */,
 			);
 			preferredProjectObjectVersion = 77;
-			productRefGroup = 0DBA7EEE2C9D28E9000400B5 /* Products */;
+			productRefGroup = 0DBA7EE42C9D28E9000400B5;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -262,6 +258,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0D6B6A052CA5328200F97D1B /* Untitled.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

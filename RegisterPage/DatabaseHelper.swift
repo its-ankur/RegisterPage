@@ -106,6 +106,7 @@ class DatabaseHelper {
                 return false
             }
         }
+    
     func fetchUser(byEmail email: String) -> User? {
             var user: User?
             if db!.open() {
@@ -132,6 +133,60 @@ class DatabaseHelper {
             }
             return user
         }
+    
+    func updatePassword(forUserWithEmail email: String, newPassword: String) -> Bool {
+        if db!.open() {
+            let updateQuery = "UPDATE Users SET password = ? WHERE email = ?"
+            
+            do {
+                try db!.executeUpdate(updateQuery, values: [newPassword, email])
+                print("Password updated successfully")
+                db!.close()
+                return true
+            } catch {
+                print("Failed to update password: \(error.localizedDescription)")
+                db!.close()
+                return false
+            }
+        } else {
+            print("Unable to open database")
+            return false
+        }
+    }
+
+    func updateUserProfile(user: User, forEmail email: String) -> Bool {
+        print(user)
+        if db!.open() {
+            let updateQuery = """
+            UPDATE Users 
+            SET firstName = ?, lastName = ?, contactNumber = ?, dateOfBirth = ?, gender = ?, country = ? 
+            WHERE email = ?;
+            """
+            
+            do {
+                try db!.executeUpdate(updateQuery, values: [
+                    user.firstName,
+                    user.lastName ?? "",
+                    user.contactNumber ?? "",
+                    user.dateOfBirth ?? "",
+                    user.gender,
+                    user.country ?? "",
+                    email
+                ])
+                print("User profile updated successfully")
+                db!.close()
+                return true
+            } catch {
+                print("Failed to update user profile: \(error.localizedDescription)")
+                db!.close()
+                return false
+            }
+        } else {
+            print("Unable to open database")
+            return false
+        }
+    }
+
 
 }
 

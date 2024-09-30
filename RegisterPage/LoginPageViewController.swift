@@ -43,7 +43,7 @@ class LoginPageViewController: UIViewController, UITextFieldDelegate {
 
     
     private func navigateToUserDetailsPage() {
-        if let detailsViewController = self.storyboard?.instantiateViewController(withIdentifier: "ShowDetailsViewController") as? ShowDetailsViewController {
+        if let detailsViewController = self.storyboard?.instantiateViewController(withIdentifier: "ProfilePage") as? ProfilePage {
             navigationController?.pushViewController(detailsViewController, animated: true)
         }
     }
@@ -217,7 +217,7 @@ class LoginPageViewController: UIViewController, UITextFieldDelegate {
                     resetForm()
                     
                     // Navigate to the Details Page
-                    if let detailsViewController = self.storyboard?.instantiateViewController(withIdentifier: "ShowDetailsViewController") as? ShowDetailsViewController {
+                    if let detailsViewController = self.storyboard?.instantiateViewController(withIdentifier: "ProfilePage") as? ProfilePage {
 
                         navigationController?.pushViewController(detailsViewController, animated: true)
                     }
