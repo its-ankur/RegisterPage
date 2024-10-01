@@ -60,7 +60,7 @@
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B1V-T4-W6n">
                                                         <rect key="frame" x="0.0" y="0.0" width="300" height="45.5"/>
                                                         <subviews>
-                                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email Adress" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3Tw-O2-pRK">
+                                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email Address" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3Tw-O2-pRK">
                                                                 <rect key="frame" x="10" y="0.0" width="280" height="35.5"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                 <textInputTraits key="textInputTraits"/>
@@ -557,6 +557,9 @@
                                         <buttonConfiguration key="configuration" style="plain" image="rectangle.portrait.and.arrow.right" catalog="system">
                                             <color key="baseForegroundColor" red="0.94530028099999996" green="0.95255547760000003" blue="0.9725518823" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         </buttonConfiguration>
+                                        <connections>
+                                            <action selector="LogoutButton:" destination="wB8-h8-2rG" eventType="touchUpInside" id="aS4-WP-7PC"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemOrangeColor"/>
@@ -582,28 +585,35 @@
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Person" translatesAutoresizingMaskIntoConstraints="NO" id="DQj-4k-veg">
                                                         <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                                     </imageView>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Camera" translatesAutoresizingMaskIntoConstraints="NO" id="nHl-qI-8xY">
-                                                        <rect key="frame" x="75" y="75" width="25" height="25"/>
+                                                    <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hfu-bF-xav">
+                                                        <rect key="frame" x="65" y="70" width="35" height="30"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="width" constant="25" id="9fp-hc-gBo"/>
-                                                            <constraint firstAttribute="height" constant="25" id="aSC-4u-fne"/>
+                                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="35" id="Dtc-8a-zbC"/>
+                                                            <constraint firstAttribute="height" constant="30" id="LZx-dB-NjZ"/>
                                                         </constraints>
-                                                    </imageView>
+                                                        <state key="normal" title="Button"/>
+                                                        <buttonConfiguration key="configuration" style="plain">
+                                                            <backgroundConfiguration key="background" image="Camera"/>
+                                                        </buttonConfiguration>
+                                                        <connections>
+                                                            <action selector="cameraIconTapped:" destination="wB8-h8-2rG" eventType="touchUpInside" id="E1H-61-AYd"/>
+                                                        </connections>
+                                                    </button>
                                                 </subviews>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="bottom" secondItem="DQj-4k-veg" secondAttribute="bottom" id="CNy-Bu-pR2"/>
                                                     <constraint firstAttribute="trailing" secondItem="DQj-4k-veg" secondAttribute="trailing" id="FrS-ba-kcw"/>
                                                     <constraint firstAttribute="height" constant="100" id="Imr-O1-5fn"/>
-                                                    <constraint firstAttribute="trailing" secondItem="nHl-qI-8xY" secondAttribute="trailing" id="K2N-Kb-jLQ"/>
                                                     <constraint firstItem="DQj-4k-veg" firstAttribute="centerX" secondItem="PB2-oH-exn" secondAttribute="centerX" id="RkP-CA-GQi"/>
                                                     <constraint firstAttribute="bottom" secondItem="DQj-4k-veg" secondAttribute="bottom" id="UfQ-BY-U4v"/>
                                                     <constraint firstItem="DQj-4k-veg" firstAttribute="leading" secondItem="PB2-oH-exn" secondAttribute="leading" id="YhB-4D-b0a"/>
-                                                    <constraint firstAttribute="bottom" secondItem="nHl-qI-8xY" secondAttribute="bottom" id="dEy-yw-dc6"/>
+                                                    <constraint firstAttribute="bottom" secondItem="hfu-bF-xav" secondAttribute="bottom" id="et7-To-Qii"/>
                                                     <constraint firstAttribute="width" constant="100" id="ff2-iy-Trq"/>
                                                     <constraint firstItem="DQj-4k-veg" firstAttribute="top" secondItem="PB2-oH-exn" secondAttribute="top" id="fgN-VH-FUu"/>
                                                     <constraint firstItem="DQj-4k-veg" firstAttribute="leading" secondItem="PB2-oH-exn" secondAttribute="leading" id="kA9-qQ-J4P"/>
                                                     <constraint firstItem="DQj-4k-veg" firstAttribute="top" secondItem="PB2-oH-exn" secondAttribute="top" id="pqC-hK-FI5"/>
+                                                    <constraint firstAttribute="trailing" secondItem="hfu-bF-xav" secondAttribute="trailing" id="qX2-51-VD9"/>
                                                     <constraint firstAttribute="trailing" secondItem="DQj-4k-veg" secondAttribute="trailing" id="tsu-Bv-Vug"/>
                                                     <constraint firstItem="DQj-4k-veg" firstAttribute="centerY" secondItem="PB2-oH-exn" secondAttribute="centerY" id="vrF-xk-KZ8"/>
                                                 </constraints>
@@ -917,6 +927,7 @@
                         <outlet property="LastName" destination="g1A-hl-0Y4" id="Lda-zg-Pb6"/>
                         <outlet property="Password" destination="IfJ-3P-2RE" id="2kN-3R-RNa"/>
                         <outlet property="PasswordView" destination="35a-It-axo" id="gwh-hb-GgW"/>
+                        <outlet property="PersonImage" destination="DQj-4k-veg" id="fMd-Mz-xGY"/>
                         <outlet property="ScrollView" destination="wao-JV-1VS" id="q4n-ht-Yua"/>
                         <outlet property="Update" destination="ZcH-GU-ScA" id="yBu-DE-YdD"/>
                     </connections>

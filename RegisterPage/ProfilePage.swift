@@ -737,9 +737,13 @@
 
 import UIKit
 import CryptoKit
+import AVFoundation
+import Photos
+import CropViewController
 
-class ProfilePage: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource{
+class ProfilePage: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CropViewControllerDelegate{
     
+    @IBOutlet weak var PersonImage: UIImageView!
     @IBOutlet weak var ConfirmPasswordView: UIView!
     @IBOutlet weak var PasswordView: UIView!
     @IBOutlet weak var ScrollView: UIScrollView!
@@ -767,25 +771,29 @@ class ProfilePage: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, 
     var countryErrorLabel: UILabel!
     var dateOfBirthErrorLabel: UILabel!
     var contactErrorLabel: UILabel!
-
+    
     // MARK: - Picker View
     var countryPicker: UIPickerView!
     var activeTextField: UITextField?
     let countries = ["USA", "Canada", "UK", "India", "Australia"]
     
+    var imageSource: UIImagePickerController.SourceType?
+    
+    
+    
     // Create a date formatter
-        let dateFormatter: DateFormatter = {
-            let formatter = DateFormatter()
-            formatter.dateStyle = .medium // Change to your preferred style
-            formatter.dateFormat = "dd/MM/yyyy" // Set your desired format
-            return formatter
-        }()
-
+    let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium // Change to your preferred style
+        formatter.dateFormat = "dd/MM/yyyy" // Set your desired format
+        return formatter
+    }()
+    
     
     override func viewDidLoad(){
         super.viewDidLoad()
         
-        self.navigationController?.navigationBar.barTintColor = UIColor.systemOrange
+        //self.navigationController?.navigationBar.barTintColor = UIColor.systemOrange
         
         // Initialize error labels
         setupErrorLabels()
@@ -828,77 +836,97 @@ class ProfilePage: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, 
         
         // Initialize Database
         DatabaseHelper.shared.initializeDatabase()
-
+        
         // Add action to date picker
         Calender.addTarget(self, action: #selector(dateChanged(_:)), for: .valueChanged)
-
+        
         // **Enable password toggle for Password and ConfirmPass fields**
         Password.enablePasswordToggle()
         ConfirmPassword.enablePasswordToggle()
         
         // Set initial secure text entry
-//        Password.isSecureTextEntry = true
-//        ConfirmPassword.isSecureTextEntry = true
+        //        Password.isSecureTextEntry = true
+        //        ConfirmPassword.isSecureTextEntry = true
         
         // **Add targets for real-time validation on Password and Confirm Password fields**
         Password.addTarget(self, action: #selector(passwordEditingChanged(_:)), for: .editingChanged)
         ConfirmPassword.addTarget(self, action: #selector(confirmPassEditingChanged(_:)), for: .editingChanged)
         
         // **Add targets for real-time validation on Contact and DateOfBirth fields**
-            Contact.addTarget(self, action: #selector(contactEditingChanged(_:)), for: .editingChanged)
-            DateOfBirth.addTarget(self, action: #selector(dateOfBirthEditingChanged(_:)), for: .editingChanged)
+        Contact.addTarget(self, action: #selector(contactEditingChanged(_:)), for: .editingChanged)
+        DateOfBirth.addTarget(self, action: #selector(dateOfBirthEditingChanged(_:)), for: .editingChanged)
         
         Contact.keyboardType = .numberPad
-
+        
         // Add tap gesture recognizer
-               let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-               view.addGestureRecognizer(tapGesture)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
         
         // Register for keyboard notifications
-                  NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-                  NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         
         // Customize the title color for this view controller
-//        self.navigationController?.navigationBar.backgroundColor = [
-//                    NSAttributedString.Key.backgroundColor: UIColor.systemOrange // Set the title color to red
-//                ]
+        //        self.navigationController?.navigationBar.backgroundColor = [
+        //                    NSAttributedString.Key.backgroundColor: UIColor.systemOrange // Set the title color to red
+        //                ]
         
         // Fetch user data from the database and display it in the text fields
-            fetchUserData()
+        fetchUserData()
         // Hide the back button
-            self.navigationItem.hidesBackButton = true
+        self.navigationItem.hidesBackButton = true
         
         PasswordView.isHidden = !ChangeSwitch.isOn
         ConfirmPasswordView.isHidden = !ChangeSwitch.isOn
         
+        setupPersonImageView()
+        
+    }
+    
+    private func setupPersonImageView() {
+        // Ensure the image view is circular with a border
+        PersonImage.layer.cornerRadius = PersonImage.frame.size.width / 2
+        PersonImage.layer.borderWidth = 1 // Set border width as desired
+        PersonImage.layer.borderColor = UIColor.systemGray.cgColor // Set border color
+        PersonImage.clipsToBounds = true // Ensure subviews are clipped to bounds
     }
     
     // Function to fetch user data from the database
     func fetchUserData() {
-        // Assuming you have a method in your DatabaseHelper to get the user data
-        
         // Retrieve saved user details from UserDefaults
-            let userDefaults = UserDefaults.standard
-            let savedEmail = userDefaults.string(forKey: "Email") ?? ""
+        let userDefaults = UserDefaults.standard
+        let savedEmail = userDefaults.string(forKey: "Email") ?? ""
         
-        if let userData = DatabaseHelper.shared.fetchUser(byEmail: savedEmail ) {
+        // Fetch the user data from the database
+        if let userData = DatabaseHelper.shared.fetchUser(byEmail: savedEmail) {
             // Update the text fields with the fetched data
             FirstName.text = userData.firstName
             LastName.text = userData.lastName
             Email.text = userData.email
             Contact.text = userData.contactNumber
             DateOfBirth.text = userData.dateOfBirth // Use the appropriate date format
+            
+            // Set the gender based on the fetched data
             if userData.gender == "Male" {
-                Gender.selectedSegmentIndex=0
+                Gender.selectedSegmentIndex = 0
+            } else if userData.gender == "Female" {
+                Gender.selectedSegmentIndex = 1
+            } else {
+                Gender.selectedSegmentIndex = 2
             }
-            else if userData.gender == "Female" {
-                Gender.selectedSegmentIndex=1
+            
+            // Set the country (assuming you are using a picker or other UI control for country)
+            Country.text = userData.country
+            
+            // Display the profile image if it exists
+            if let profileImageData = userData.profileImage {
+                let profileImage = UIImage(data: profileImageData)
+                PersonImage.image = profileImage
+            } else {
+                // Handle the case where no profile image is set (e.g., show a default placeholder)
+                PersonImage.image = UIImage(named: "defaultProfileImage") // Replace with your placeholder image name
             }
-            else{
-                Gender.selectedSegmentIndex=2
-            }
-            Country.text = userData.country // Assuming country is already populated using the country picker
-
+            
             // Hide any error labels since data has been populated
             hideError(label: firstNameErrorLabel, for: FirstName)
             hideError(label: emailErrorLabel, for: Email)
@@ -909,6 +937,7 @@ class ProfilePage: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, 
             hideError(label: confirmPassErrorLabel, for: ConfirmPassword)
         } else {
             // Handle the case where no user data is found (e.g., show a message or reset fields)
+            print("No user data found for the provided email.")
         }
     }
 
@@ -916,7 +945,7 @@ class ProfilePage: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true) // Dismiss the keyboard
     }
-
+    
     
     deinit {
         // Unregister from notifications
@@ -1053,7 +1082,7 @@ class ProfilePage: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, 
     }
     
     // MARK: - TextField Delegate Methods
-
+    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         // Handle real-time validation based on the text field
         if textField == FirstName {
@@ -1064,18 +1093,18 @@ class ProfilePage: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, 
             // Real-time validation for Contact commented out
         } else if textField == DateOfBirth {
             // Handle DateOfBirth as a text input without DatePicker
-                                    let newText = (textField.text! as NSString).replacingCharacters(in: range, with: string)
-                                    
-                                    // Custom validation for date format (dd/MM/yyyy)
-                                    if newText.count <= 10 { // Limit input to 10 characters (dd/MM/yyyy)
-                                        // Allow numbers and '/'
-                                        let allowedCharacters = CharacterSet(charactersIn: "0123456789/")
-                                        let characterSet = CharacterSet(charactersIn: string)
-                                        return allowedCharacters.isSuperset(of: characterSet)
-                                    } else {
-                                        // Prevent more than 10 characters from being entered
-                                        return false
-                                    }
+            let newText = (textField.text! as NSString).replacingCharacters(in: range, with: string)
+            
+            // Custom validation for date format (dd/MM/yyyy)
+            if newText.count <= 10 { // Limit input to 10 characters (dd/MM/yyyy)
+                // Allow numbers and '/'
+                let allowedCharacters = CharacterSet(charactersIn: "0123456789/")
+                let characterSet = CharacterSet(charactersIn: string)
+                return allowedCharacters.isSuperset(of: characterSet)
+            } else {
+                // Prevent more than 10 characters from being entered
+                return false
+            }
         } else if textField == Country {
             //validateCountry()
             return false
@@ -1085,11 +1114,11 @@ class ProfilePage: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, 
             // Real-time validation for ConfirmPass is disabled
         }
         //textField.resignFirstResponder() // This will hide the keyboard
-
+        
         // Allow text change to proceed for other fields
         return true
     }
-
+    
     func textFieldDidEndEditing(_ textField: UITextField) {
         activeTextField=nil
         // Perform validation once editing ends for the specific fields
@@ -1115,13 +1144,13 @@ class ProfilePage: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, 
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-            activeTextField = textField // Track the active text field
-        }
+        activeTextField = textField // Track the active text field
+    }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-            textField.resignFirstResponder() // Hide the keyboard
-            return true
-        }
+        textField.resignFirstResponder() // Hide the keyboard
+        return true
+    }
     
     // Helper method to validate date format (dd/MM/yyyy)
     func isValidDateFormat(_ dateText: String) -> Bool {
@@ -1130,7 +1159,7 @@ class ProfilePage: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, 
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         return dateFormatter.date(from: dateText) != nil
     }
-
+    
     // Helper method to show an invalid date format message
     func showInvalidDateFormatMessage() {
         // Implement your custom error message here, e.g., an alert or inline label
@@ -1156,7 +1185,7 @@ class ProfilePage: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, 
             hideError(label: emailErrorLabel, for: Email)
         }
     }
-
+    
     
     func validatePassword() {
         if let password = Password.text, password.isEmpty {
@@ -1189,9 +1218,9 @@ class ProfilePage: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, 
     
     func validateSwitch() {
         if !ChangeSwitch.isOn {
-//            showError(label: termsErrorLabel, message: "Please accept terms and conditions", for: ChangeSwitch)
+            //            showError(label: termsErrorLabel, message: "Please accept terms and conditions", for: ChangeSwitch)
         } else {
-//            hideError(label: termsErrorLabel, for: ChangeSwitch)
+            //            hideError(label: termsErrorLabel, for: ChangeSwitch)
         }
     }
     
@@ -1230,8 +1259,8 @@ class ProfilePage: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, 
         // If all validations pass
         hideError(label: dateOfBirthErrorLabel, for: DateOfBirth)
     }
-
-
+    
+    
     
     func validateContact() {
         guard let contact = Contact.text, !contact.isEmpty else {
@@ -1255,7 +1284,7 @@ class ProfilePage: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, 
         // If all validations pass
         hideError(label: contactErrorLabel, for: Contact)
     }
-
+    
     
     // MARK: - Utility Validation Functions
     
@@ -1363,84 +1392,161 @@ class ProfilePage: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, 
     
     @IBAction func UpdateBtn(_ sender: UIButton) {
         print("Update button clicked")
+        
+        // Perform validations before proceeding
+        validateFirstName()
+        validateEmail()
+        validateSwitch() // Assuming this validates the switch state
+        
+        // Check the state of validation for debugging
+        print("First Name Error Label is Hidden: \(firstNameErrorLabel.isHidden)")
+        print("Email Error Label is Hidden: \(emailErrorLabel.isHidden)")
+        print("Date of Birth Error Label is Hidden: \(dateOfBirthErrorLabel.isHidden)")
+        print("Contact Error Label is Hidden: \(contactErrorLabel.isHidden)")
+        
+        // Check if there are no validation errors
+        let isFormValid = firstNameErrorLabel.isHidden &&
+        emailErrorLabel.isHidden &&
+        dateOfBirthErrorLabel.isHidden &&
+        contactErrorLabel.isHidden
+        
+        if isFormValid {
+            // Retrieve text field values
+            guard let firstName = FirstName.text?.trimmingCharacters(in: .whitespaces),
+                  let email = Email.text?.trimmingCharacters(in: .whitespaces) else {
+                CustomToast.showToast(message: "Please fill in all required fields.", inView: self.view, backgroundColor: UIColor.systemRed)
+                print("Form is not valid: Required fields are missing")
+                return
+            }
             
-            // Perform validations before proceeding
-            validateFirstName()
-            validateEmail()
-            validatePassword()
-            validateConfirmPassword()
-            validateSwitch()
+            let lastName = LastName.text?.trimmingCharacters(in: .whitespaces) ?? ""
+            let contact = Contact.text?.trimmingCharacters(in: .whitespaces)
+            let dateOfBirth = DateOfBirth.text?.trimmingCharacters(in: .whitespaces)
+            let genderIndex = Gender.selectedSegmentIndex
+            let genderString = genderIndex == UISegmentedControl.noSegment ? "" : Gender.titleForSegment(at: genderIndex)!
+            let country = Country.text?.trimmingCharacters(in: .whitespaces)
             
-            // Check if there are no validation errors
-            let isFormValid = firstNameErrorLabel.isHidden &&
-                emailErrorLabel.isHidden &&
-                passwordErrorLabel.isHidden &&
-                confirmPassErrorLabel.isHidden &&
-                dateOfBirthErrorLabel.isHidden &&
-                contactErrorLabel.isHidden
+            var password: String? = nil
             
-            if isFormValid {
-                // Retrieve text field values
-                guard let firstName = FirstName.text?.trimmingCharacters(in: .whitespaces),
-                      let email = Email.text?.trimmingCharacters(in: .whitespaces) else {
-                    CustomToast.showToast(message: "Please fill in all required fields.", inView: self.view, backgroundColor: UIColor.systemRed)
-                    return
+            // Convert the image to Data if it exists
+            var imageData: Data? = nil
+                    if let profileImage = PersonImage.image {
+                        imageData = profileImage.jpegData(compressionQuality: 1.0)
+                    }
+            
+            // Check if the ChangeSwitch is on
+            if ChangeSwitch.isOn {
+                print("ChangeSwitch is ON. Validating password fields...")
+                // Validate the password fields
+                validatePassword()
+                validateConfirmPassword()
+                
+                if passwordErrorLabel.isHidden && confirmPassErrorLabel.isHidden {
+                    // Password fields are valid
+                    password = Password.text
+                    print("Password fields are valid. Password: \(password!)")
+                    
+                    // Hash the password before updating
+                    let hashedPassword = hashPassword(password!)
+                    print("Hashed Password: \(hashedPassword)")
+                    
+                    // Update user details with new password
+                    let user = User(
+                        firstName: firstName,
+                        lastName: lastName.isEmpty ? nil : lastName,
+                        email: email,
+                        contactNumber: contact,
+                        password: hashedPassword,
+                        dateOfBirth: dateOfBirth,
+                        gender: genderString,
+                        country: country,
+                        profileImage: imageData,
+                        termsAccepted: true // Or set based on your terms acceptance logic
+                    )
+                    
+                    // Update user details in SQLite database
+                    let updateSuccess = DatabaseHelper.shared.updateUserProfile(user: user, forEmail: email)
+                    
+                    if updateSuccess {
+                        CustomToast.showToast(message: "Update Successful!", inView: self.view, backgroundColor: UIColor.systemGreen)
+                        print("User profile updated successfully.")
+                    } else {
+                        CustomToast.showToast(message: "Update Failed! Please try again.", inView: self.view, backgroundColor: UIColor.systemRed)
+                        print("Failed to update user profile in database.")
+                    }
+                } else {
+                    CustomToast.showToast(message: "Please fix the password errors before submitting.", inView: self.view, backgroundColor: UIColor.systemRed)
+                    print("Password validation failed. Errors present.")
                 }
-                
-                let lastName = LastName.text?.trimmingCharacters(in: .whitespaces) ?? ""
-                let contact = Contact.text?.trimmingCharacters(in: .whitespaces)
-                let dateOfBirth = DateOfBirth.text?.trimmingCharacters(in: .whitespaces)
-                let genderIndex = Gender.selectedSegmentIndex
-                let genderString = genderIndex == UISegmentedControl.noSegment ? "" : Gender.titleForSegment(at: genderIndex)!
-                let country = Country.text?.trimmingCharacters(in: .whitespaces)
-                let password = Password.text!
-
-                // Hash the password before updating
-                let hashedPassword = hashPassword(password)
-                
-                // Create a user object with the new data
+            } else {
+                print("ChangeSwitch is OFF. Updating user details without changing the password...")
+                // Update user details without changing the password
                 let user = User(
                     firstName: firstName,
                     lastName: lastName.isEmpty ? nil : lastName,
                     email: email,
                     contactNumber: contact,
-                    password: hashedPassword, // Use the hashed password
+                    password: nil, // Do not update password
                     dateOfBirth: dateOfBirth,
                     gender: genderString,
                     country: country,
+                    profileImage: imageData,
                     termsAccepted: true // Or set based on your terms acceptance logic
                 )
                 
                 // Update user details in SQLite database
-                let updateSuccess = DatabaseHelper.shared.updateUserProfile(user: user, forEmail: email)
+                let updateSuccess = DatabaseHelper.shared.updateUserProfileWithoutPassword(user: user, forEmail: email)
                 
                 if updateSuccess {
-                    // Show success toast message
                     CustomToast.showToast(message: "Update Successful!", inView: self.view, backgroundColor: UIColor.systemGreen)
-                    // Optionally, refresh the UI or navigate to another view
+                    print("User profile updated successfully without changing the password.")
                 } else {
-                    // Show error toast message
                     CustomToast.showToast(message: "Update Failed! Please try again.", inView: self.view, backgroundColor: UIColor.systemRed)
+                    print("Failed to update user profile in database without changing password.")
                 }
-            } else {
-                // Show general error toast message
-                CustomToast.showToast(message: "Please fix the errors before submitting.", inView: self.view, backgroundColor: UIColor.systemRed)
             }
+        } else {
+            CustomToast.showToast(message: "Please fix the errors before submitting.", inView: self.view, backgroundColor: UIColor.systemRed)
+            print("Form is not valid: Errors present in form.")
+        }
     }
     
     
     @IBAction func ChangeSwitchToggled(_ sender: UISwitch) {
         if sender.isOn {
-                // Show password fields
+            // Show password fields
             PasswordView.isHidden = false
             ConfirmPasswordView.isHidden = false
-            } else {
-                // Hide password fields
-                PasswordView.isHidden = true
-                ConfirmPasswordView.isHidden = true
-            }
+        } else {
+            // Hide password fields
+            PasswordView.isHidden = true
+            ConfirmPasswordView.isHidden = true
+        }
         // Update the layout
-            self.view.layoutIfNeeded()
+        self.view.layoutIfNeeded()
+    }
+    
+    
+    @IBAction func LogoutButton(_ sender: UIButton) {
+        let alert = UIAlertController(title: "Logout", message: "Are you sure you want to log out?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { _ in
+            self.logout()
+        }))
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func logout() {
+        // Clear user session data
+        UserDefaults.standard.set(false, forKey: "isUserLoggedIn")
+        UserDefaults.standard.removeObject(forKey: "Email")
+        
+        
+        // Show logged out message and navigate back to the login screen
+        CustomToast.showToast(message: "Logged out successfully.", inView: view.self, backgroundColor: UIColor.systemGreen)
+        
+        let loginVC = storyboard?.instantiateViewController(withIdentifier: "LoginPageViewController") as! LoginPageViewController
+        navigationController?.setViewControllers([loginVC], animated: true)
     }
     
     func hashPassword(_ password: String) -> String {
@@ -1475,35 +1581,35 @@ class ProfilePage: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, 
     @objc func contactEditingChanged(_ textField: UITextField) {
         validateContact()
     }
-
+    
     // Selector for DateOfBirth field changes
     @objc func dateOfBirthEditingChanged(_ textField: UITextField) {
         validateDateOfBirth()
     }
-
+    
     // Method to dismiss the keyboard
-        @objc func dismissKeyboard() {
-            view.endEditing(true) // Hides the keyboard
-        }
+    @objc func dismissKeyboard() {
+        view.endEditing(true) // Hides the keyboard
+    }
     
     @objc func keyboardWillShow(notification: NSNotification) {
         guard let userInfo = notification.userInfo,
-                  let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
-            
-            let keyboardHeight = keyboardFrame.cgRectValue.height
-            let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight, right: 0)
+              let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
+        
+        let keyboardHeight = keyboardFrame.cgRectValue.height
+        let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight, right: 0)
         ScrollView.contentInset = contentInsets
         ScrollView.scrollIndicatorInsets = contentInsets
-            
-            if let activeField = activeTextField {
-                let aRect = self.view.frame
-                if !aRect.contains(activeField.frame.origin) {
-                    ScrollView.scrollRectToVisible(activeField.frame, animated: true)
-                }
+        
+        if let activeField = activeTextField {
+            let aRect = self.view.frame
+            if !aRect.contains(activeField.frame.origin) {
+                ScrollView.scrollRectToVisible(activeField.frame, animated: true)
             }
-
+        }
+        
     }
-
+    
     @objc func keyboardWillHide(notification: NSNotification) {
         // Reset the content inset when the keyboard is hidden
         let contentInsets = UIEdgeInsets.zero
@@ -1512,11 +1618,238 @@ class ProfilePage: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, 
     }
     
     // Format date to "dd/MM/yyyy"
-        func formatDateToString(date: Date) -> String {
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "dd/MM/yyyy"
-            return dateFormatter.string(from: date)
+    func formatDateToString(date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd/MM/yyyy"
+        return dateFormatter.string(from: date)
+    }
+        
+    @IBAction func cameraIconTapped(_ sender: UIButton) {
+        // Check camera availability
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            // Request camera permission
+            checkCameraPermissions()
+        } else if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+            // If camera is not available, check photo library
+            checkPhotoLibraryPermissions()
+        } else {
+            // Handle the case where neither source type is available
+            showAlert("Error", "Camera and Photo Library are not available.")
+        }
+    }
+    
+    private func checkCameraPermissions() {
+        AVCaptureDevice.requestAccess(for: .video) { [weak self] granted in
+            DispatchQueue.main.async {
+                if granted {
+                    self?.presentImagePicker()
+                } else {
+                    self?.showAlert("Camera Access Denied", "Please allow camera access in settings.")
+                }
+            }
+        }
+    }
+    
+    private func checkPhotoLibraryPermissions() {
+        PHPhotoLibrary.requestAuthorization { [weak self] status in
+            DispatchQueue.main.async {
+                switch status {
+                case .authorized:
+                    self?.presentImagePicker()
+                case .denied, .restricted:
+                    self?.showAlert("Photo Library Access Denied", "Please allow photo library access in settings.")
+                default:
+                    break
+                }
+            }
+        }
+    }
+    
+    private func showAlert(_ title: String, _ message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    // MARK: - UIImagePickerControllerDelegate Methods
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        guard let image = info[.originalImage] as? UIImage else {
+            //print("Image picked, presenting crop view controller")
+//            DispatchQueue.main.async {
+//                self.presentCropViewController(image: image)
+//            }
+            return
+        }
+        picker.dismiss(animated: true, completion: nil)
+        showCrop(image: image)
+    }
+    
+
+    func showCrop(image: UIImage){
+        let vc = CropViewController(croppingStyle: .default, image: image)
+        vc.delegate=self
+        present(vc,animated: true)
+    }
+    
+    func cropViewController(_ cropViewController: CropViewController, didFinishCancelled cancelled: Bool) {
+        cropViewController.dismiss(animated: true)
+    }
+    
+
+    func cropViewController(_ cropViewController: CropViewController, didCropToImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
+        print("Crop View Controller called")
+        
+        // Convert UIImage to Data
+        guard let imageData = image.jpegData(compressionQuality: 1.0) else {
+            print("Error converting image to data.")
+            cropViewController.dismiss(animated: true, completion: nil)
+            return
         }
 
+        if imageSource == .photoLibrary {
+            if validateImageSize(image) {
+                DispatchQueue.main.async {
+                    print("Setting image from library")
+                    self.PersonImage.image = image // Display the cropped image in the image view
+                    //self.profileImageData = imageData // Store the image data to be used later
+                }
+            } else {
+                DispatchQueue.main.async {
+                    print("Image size too large")
+                    self.showImageSizeErrorAlert() // Show alert for large image size
+                }
+            }
+        } else {
+            DispatchQueue.main.async {
+                print("Setting image from camera")
+                self.PersonImage.image = image // Display the cropped image in the image view
+                //self.profileImageData = imageData // Store the image data to be used later
+            }
+        }
+        
+        cropViewController.dismiss(animated: true, completion: nil)
+    }
+
+
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    
+    // Function to request permissions
+    private func requestCameraAndPhotoLibraryPermissions() {
+        let cameraAuthorizationStatus = AVCaptureDevice.authorizationStatus(for: .video)
+        let photoAuthorizationStatus = PHPhotoLibrary.authorizationStatus()
+        
+        // Check camera permission
+        if cameraAuthorizationStatus == .notDetermined {
+            AVCaptureDevice.requestAccess(for: .video) { granted in
+                if granted {
+                    self.presentImagePicker()
+                } else {
+                    self.showPermissionDeniedAlert()
+                }
+            }
+        } else if cameraAuthorizationStatus == .denied {
+            showPermissionDeniedAlert()
+        } else {
+            // Check photo library permission
+            if photoAuthorizationStatus == .notDetermined {
+                PHPhotoLibrary.requestAuthorization { status in
+                    if status == .authorized {
+                        self.presentImagePicker()
+                    } else {
+                        self.showPermissionDeniedAlert()
+                    }
+                }
+            } else if photoAuthorizationStatus == .denied {
+                showPermissionDeniedAlert()
+            } else {
+                // Both permissions are granted
+                self.presentImagePicker()
+            }
+        }
+    }
+    
+    // Function to present image picker
+    private func presentImagePicker() {
+        let alertController = UIAlertController(title: "Select Image Source", message: nil, preferredStyle: .actionSheet)
+        
+        // Camera option
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            alertController.addAction(UIAlertAction(title: "Camera", style: .default, handler: { _ in
+                self.openImagePicker(sourceType: .camera)
+            }))
+        }
+        
+        // Photo Library option
+        alertController.addAction(UIAlertAction(title: "Photo Library", style: .default, handler: { _ in
+            self.openImagePicker(sourceType: .photoLibrary)
+        }))
+        
+        // Cancel option
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    private func presentImagePicker(sourceType: UIImagePickerController.SourceType) {
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.sourceType = sourceType
+        DispatchQueue.main.async {
+            self.present(imagePicker, animated: true, completion: nil)
+        }
+    }
+
+    
+    // Function to open the image picker
+    private func openImagePicker(sourceType: UIImagePickerController.SourceType) {
+        imageSource = sourceType // Store the source type
+            let imagePickerController = UIImagePickerController()
+            imagePickerController.delegate = self
+            imagePickerController.sourceType = sourceType
+            present(imagePickerController, animated: true, completion: nil)
+    }
+    
+    // Validate image size
+    private func validateImageSize(_ image: UIImage) -> Bool {
+        // Specify your size requirements (e.g., max size of 2MB)
+        let maxSizeInMB: CGFloat = 2.0
+        let maxSizeInBytes = maxSizeInMB * 1024 * 1024
+        
+        // Get the image data
+        if let imageData = image.jpegData(compressionQuality: 1.0) {
+            let imageSize = CGFloat(imageData.count)
+            return imageSize <= maxSizeInBytes
+        }
+        return false
+    }
+    
+    // Show alert for image size error
+    private func showImageSizeErrorAlert() {
+        let alert = UIAlertController(title: "Image Size Error", message: "The selected image exceeds the maximum allowed size of 2MB.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        DispatchQueue.main.async {
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    
+    // Function to show alert if permissions are denied
+    private func showPermissionDeniedAlert() {
+        let alert = UIAlertController(title: "Permission Denied", message: "Please enable camera and photo library access in Settings.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func showImagePicker() {
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.sourceType = .photoLibrary // or .camera
+        present(imagePicker, animated: true, completion: nil)
+    }
     
 }
